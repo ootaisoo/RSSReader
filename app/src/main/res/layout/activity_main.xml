@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.administrator.rssreader.MainActivity">
+
+    <fragment
+        android:id="@+id/main_fragment"
+        class="com.example.administrator.rssreader.MainFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/main_fragment"/>
+
+    <fragment
+        android:id="@+id/drawer_fragment"
+        class="com.example.administrator.rssreader.DrawerFragment"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        tools:layout="@layout/drawer_fragment"/>
+
+</android.support.v4.widget.DrawerLayout>

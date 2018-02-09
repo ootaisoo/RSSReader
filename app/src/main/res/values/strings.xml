@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">RSS Reader</string>
+    <string name="feeds">Feeds</string>
+    <string name="enter_url">Enter URL</string>
+    <string name="invalid_url">Invalid URL</string>
+
+</resources>
