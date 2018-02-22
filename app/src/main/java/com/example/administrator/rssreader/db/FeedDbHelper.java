@@ -16,8 +16,9 @@ public class FeedDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "feedsdatabase.db";
     public static final String SQL_CREATE_ENTRIES = "CREATE TABLE " + FeedEntries.TABLE_NAME + " ("
             + FeedEntries._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + FeedEntries.FEED_NAME + " TEXT UNIQUE, "
-            + FeedEntries.FEED_RESOURCE_IMAGE + " BLOB);";
+            + FeedEntries.FEED_NAME + " TEXT, "
+            + FeedEntries.FEED_RESOURCE_IMAGE + " BLOB, "
+            + FeedEntries.FEED_URL + " TEXT UNIQUE);";
     public static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + FeedEntries.TABLE_NAME;
 
 

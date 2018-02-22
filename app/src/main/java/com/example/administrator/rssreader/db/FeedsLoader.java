@@ -15,7 +15,7 @@ public class FeedsLoader extends AsyncTaskLoader<Cursor> {
     public static final String LOG_TAG = FeedsLoader.class.getName();
 
     private Cursor cursor;
-    final ForceLoadContentObserver observer;
+    private final ForceLoadContentObserver observer;
 
     public FeedsLoader(Context context) {
         super(context);
@@ -35,7 +35,6 @@ public class FeedsLoader extends AsyncTaskLoader<Cursor> {
 
     @Override
     public Cursor loadInBackground() {
-        Log.e(LOG_TAG, "loadInBackground()");
         FeedDbHelper dbHelper = new FeedDbHelper(getContext());
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         cursor = database.query(FeedsContract.FeedEntries.TABLE_NAME, null, null, null, null, null, null);

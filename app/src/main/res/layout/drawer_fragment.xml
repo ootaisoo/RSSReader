@@ -3,16 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="180dp"
         android:layout_height="60dp"
-        android:background="#b0bec5"
+        android:background="@color/colorPrimaryDark"
         android:gravity="center"
         android:text="@string/feeds"
         android:textSize="30sp"
+        android:textColor="@color/cardview_light_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,12 +26,13 @@
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/button"
-
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:src="@drawable/ic_add_black_36dp"
+        android:background="@color/colorAccent"
+        android:contentDescription="@string/image_button"
         app:layout_constraintStart_toEndOf="@+id/divider"
         app:layout_constraintTop_toTopOf="parent" />
 

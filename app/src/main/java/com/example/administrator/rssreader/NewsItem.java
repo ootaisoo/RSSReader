@@ -1,5 +1,7 @@
 package com.example.administrator.rssreader;
 
+import android.graphics.Bitmap;
+
 import java.net.URL;
 
 /**
@@ -12,13 +14,14 @@ public class NewsItem {
     private String description;
     private String time;
     private String url;
-//    private URL image;
+//    private Bitmap image;
 
     public NewsItem(String title, String description, String time, String url) {
         this.title = title;
         this.description = description;
         this.time = time;
         this.url = url;
+//        this.image = image;
     }
 
     public String getTitle() {
@@ -37,7 +40,7 @@ public class NewsItem {
         return url;
     }
 
-//    public URL getImage() {
+//    public Bitmap getImage() {
 //        return image;
 //    }
 }

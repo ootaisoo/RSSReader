@@ -11,7 +11,7 @@
         class="com.example.administrator.rssreader.MainFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/main_fragment"/>
+        tools:layout="@layout/main_fragment" />
 
     <fragment
         android:id="@+id/drawer_fragment"
@@ -19,6 +19,6 @@
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        tools:layout="@layout/drawer_fragment"/>
+        tools:layout="@layout/drawer_fragment" />
 
 </android.support.v4.widget.DrawerLayout>

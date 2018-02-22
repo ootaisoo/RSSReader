@@ -95,7 +95,6 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
      * closed.
      */
     public Cursor swapCursor(Cursor newCursor) {
-        Log.e(LOG_TAG, "swapcursor");
         if (newCursor == mCursor) {
             return null;
         }

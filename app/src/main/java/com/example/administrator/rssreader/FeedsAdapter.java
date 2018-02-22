@@ -45,17 +45,21 @@ public class FeedsAdapter extends CursorRecyclerViewAdapter<FeedsAdapter.FeedsVi
 
     public static final String LOG_TAG = FeedsAdapter.class.getName();
 
+    OnFeedItemSelectedListener onFeedItemSelectedListener;
+
+    public interface OnFeedItemSelectedListener {
+        public void onFeedItemSelected(String feedUrl);
+    }
+
     public FeedsAdapter(Context context, Cursor cursor) {
         super(context, cursor);
         this.context = context;
-        Log.e(LOG_TAG, "FeedsAdapter constructor");
     }
 
     @Override
     public FeedsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.feeds_holder, parent, false);
         FeedsViewHolder holder = new FeedsViewHolder(view);
-        Log.e(LOG_TAG, "onCreateViewHolder");
         return holder;
     }
 
@@ -64,43 +68,43 @@ public class FeedsAdapter extends CursorRecyclerViewAdapter<FeedsAdapter.FeedsVi
         FeedItem feedItem = FeedItem.fromCursor(cursor);
         holder.feedName.setText(feedItem.getName());
         holder.image.setImageBitmap(feedItem.getImage());
-        Log.e(LOG_TAG, "onBindViewHolder");
+        holder.feedUrl = feedItem.getFeedUrl();
     }
 
     public class FeedsViewHolder extends RecyclerView.ViewHolder {
         private ImageView image;
         private TextView feedName;
+        private String feedUrl;
 
 
         public FeedsViewHolder(final View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.feed_image);
             feedName = itemView.findViewById(R.id.feed_name);
-            Log.e(LOG_TAG, "FeedsViewHolder constructor");
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentManager fragmentManager = ((FragmentActivity)context).getSupportFragmentManager();
+                    onFeedItemSelectedListener.onFeedItemSelected(feedUrl);
+//                    FragmentManager fragmentManager = ((FragmentActivity)context).getSupportFragmentManager();
+//
+//                    Fragment mainFragment = fragmentManager.findFragmentById(R.id.main_fragment);
+//                    Fragment drawerFragment = fragmentManager.findFragmentById(R.id.drawer_fragment);
 
-                    Fragment mainFragment = fragmentManager.findFragmentById(R.id.main_fragment);
-                    Fragment drawerFragment = fragmentManager.findFragmentById(R.id.drawer_fragment);
-
-                    Log.e(LOG_TAG, "OnClick");
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    Log.e(LOG_TAG, "beginTransaction()");
-                    transaction.replace(R.id.drawer_fragment, mainFragment);
-                    Log.e(LOG_TAG, "transaction.replace");
-                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                    Log.e(LOG_TAG, "transaction.setTransition");
-                    transaction.addToBackStack(null);
-                    Log.e(LOG_TAG, "transaction.addToBackStack");
-                    transaction.commit();
-                    Log.e(LOG_TAG, "transaction.commit()");
-                    fragmentManager.executePendingTransactions();
+//                    Log.e(LOG_TAG, "OnClick");
+//                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+//                    Log.e(LOG_TAG, "beginTransaction()");
+//                    transaction.replace(R.id.drawer_fragment, mainFragment);
+//                    Log.e(LOG_TAG, "transaction.replace");
+//                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//                    Log.e(LOG_TAG, "transaction.setTransition");
+//                    transaction.addToBackStack(null);
+//                    Log.e(LOG_TAG, "transaction.addToBackStack");
+//                    transaction.commit();
+//                    Log.e(LOG_TAG, "transaction.commit()");
+//                    fragmentManager.executePendingTransactions();
                     DrawerLayout drawerLayout = ((Activity)context).findViewById(R.id.drawer_layout);
                     drawerLayout.closeDrawer(GravityCompat.START);
-
                 }
             });
 

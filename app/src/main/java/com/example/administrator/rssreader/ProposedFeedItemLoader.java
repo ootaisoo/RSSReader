@@ -34,32 +34,32 @@ public class ProposedFeedItemLoader extends AsyncTaskLoader<List<ProposedFeedIte
     public ProposedFeedItemLoader(String baseUrl, Context context) {
         super(context);
         this.baseUrl = baseUrl;
-        Log.e(LOG_TAG, "Loader created with url: " + this.baseUrl);
     }
 
     @Override
     protected void onStartLoading() {
-        Log.e(LOG_TAG, "forceLoad");
         forceLoad();
     }
 
     @Override
     public List<ProposedFeedItem> loadInBackground() {
-        Log.e(LOG_TAG, "loadInBackground");
         return fetchFeedItemsData(baseUrl);
     }
 
     private List<ProposedFeedItem> fetchFeedItemsData(String urlText){
-        Log.e(LOG_TAG, "fetchFeedItemsData method");
         List<ProposedFeedItem> proposedFeedItemList = new ArrayList<>();
         try {
             Document doc = Jsoup.connect(urlText).get();
             Elements links = doc.select("link");
+            if (links == null || links.isEmpty()){
+                links = doc.select("a");
+            }
+            //extract attributes via jsoup and put them in proposedFeedItemList
             for (Element link : links){
                 if (link.attr("href").contains("rss") || link.attr("href").contains("feed")){
                     proposedFeedItemList.add(new ProposedFeedItem(link.attr("title"),
                             link.attr("abs:href"),
-                            extractFeedImage(doc.select("link[rel*=apple-touch-icon]").attr("abs:href"))));
+                            extractFeedImage(doc.select("link[rel*=icon]").attr("abs:href"))));
                 }
 
             }

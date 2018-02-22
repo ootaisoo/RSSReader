@@ -19,5 +19,6 @@ public final class FeedsContract {
         public static final String _ID = BaseColumns._ID;
         public static final String FEED_NAME = "feed_name";
         public static final String FEED_RESOURCE_IMAGE = "feed_image";
+        public static final String FEED_URL = "feed_url";
     }
 }

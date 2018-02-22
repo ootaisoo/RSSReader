@@ -3,6 +3,7 @@
     package="com.example.administrator.rssreader">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -12,14 +13,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+
+        </activity>
+        <activity android:name=".addFeedActivity"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".NewsActivity"/>
+
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".addFeedActivity"
-            android:windowSoftInputMode="stateHidden"/>
+
     </application>
 
 </manifest>

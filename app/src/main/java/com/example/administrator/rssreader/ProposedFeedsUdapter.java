@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.rssreader.db.FeedDbHelper;
 import com.example.administrator.rssreader.db.FeedsContract.FeedEntries;
@@ -60,6 +61,12 @@ public class ProposedFeedsUdapter extends RecyclerView.Adapter<ProposedFeedsUdap
         return proposedFeedsList.size();
     }
 
+    public void clear() {
+        final int size = proposedFeedsList.size();
+        proposedFeedsList.clear();
+        notifyItemRangeRemoved(0, size);
+    }
+
     public class ProposedFeedsViewHolder extends RecyclerView.ViewHolder {
         private TextView feedResourceName;
         private TextView feedUrl;
@@ -78,13 +85,11 @@ public class ProposedFeedsUdapter extends RecyclerView.Adapter<ProposedFeedsUdap
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     feedBitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
                     byte[] feedImageBytes = bos.toByteArray();
-                    if (feedImageBytes.length != 0) {
-                        Log.e(LOG_TAG, "bytearray isn't empty");
-                    }
 
                     ContentValues contentValues = new ContentValues();
                     contentValues.put(FeedEntries.FEED_NAME, String.valueOf(feedResourceName.getText()));
                     contentValues.put(FeedEntries.FEED_RESOURCE_IMAGE, feedImageBytes);
+                    contentValues.put(FeedEntries.FEED_URL, String.valueOf(feedUrl.getText()));
 
                     FeedDbHelper feedDbHelper = new FeedDbHelper(ProposedFeedsUdapter.this.context);
                     SQLiteDatabase feedsDataBase = feedDbHelper.getWritableDatabase();
@@ -94,6 +99,7 @@ public class ProposedFeedsUdapter extends RecyclerView.Adapter<ProposedFeedsUdap
                         e.printStackTrace();
                     }
                     context.getContentResolver().notifyChange(URI, null);
+                    Toast.makeText(context, R.string.feed_added, Toast.LENGTH_SHORT).show();
                     Log.e(LOG_TAG, "the numbers of rows in the cursor is " + String.valueOf(feedsDataBase.query(FeedEntries.TABLE_NAME, null, null, null, null, null, null).getCount()));
                 }
             });
