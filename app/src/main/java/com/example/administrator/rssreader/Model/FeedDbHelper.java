@@ -1,10 +1,10 @@
-package com.example.administrator.rssreader.db;
+package com.example.administrator.rssreader.Model;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.administrator.rssreader.db.FeedsContract.FeedEntries;
+import com.example.administrator.rssreader.Model.FeedsContract.FeedEntries;
 
 /**
  * Created by Administrator on 01.02.2018.

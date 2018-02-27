@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.administrator.rssreader.MainActivity">
+    tools:context="com.example.administrator.rssreader.View.MainActivity">
 
     <fragment
         android:id="@+id/main_fragment"
-        class="com.example.administrator.rssreader.MainFragment"
+        class="com.example.administrator.rssreader.View.MainFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/main_fragment" />
 
     <fragment
         android:id="@+id/drawer_fragment"
-        class="com.example.administrator.rssreader.DrawerFragment"
+        class="com.example.administrator.rssreader.View.DrawerFragment"
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"

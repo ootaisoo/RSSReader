@@ -1,13 +1,8 @@
-package com.example.administrator.rssreader;
+package com.example.administrator.rssreader.Presenter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,22 +11,14 @@ import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
+import com.example.administrator.rssreader.R;
+import com.example.administrator.rssreader.View.NewsActivity;
 
-import org.jdom2.Document;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.security.acl.LastOwnerException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -57,6 +44,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         return feedItems.size();
     }
 
+    public void clear() {
+        final int size = feedItems.size();
+        feedItems.clear();
+        notifyItemRangeRemoved(0, size);
+    }
+
     @Override
     public void onBindViewHolder(NewsViewHolder holder, int position) {
 
@@ -74,9 +67,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             e.printStackTrace();
         }
 
+        String feedUrl;
         String imageUrl;
-        Bitmap newsBitmap;
         String description;
+        String title = feedItem.getChild("title").getValue();
+        feedUrl = feedItem.getChild("link").getValue();
+        String[] strings = feedUrl.split("/");
+        String siteUrl = strings[2];
 
         if (feedItem.getChild("enclosure") != null) {
             imageUrl = feedItem.getChild("enclosure").getAttributeValue("url");
@@ -88,30 +85,32 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             imageUrl = null;
         }
 
-//        newsBitmap = extractFeedImage(imageUrl);
         if (feedItem.getChild("description") != null) {
             description = feedItem.getChild("description").getValue();
         } else {
             description = null;
         }
 
-        NewsItem newsItem = new NewsItem(feedItem.getChild("title").getValue(),
+        NewsItem newsItem = new NewsItem(title,
                 description,
                 newsPublishingDate,
-                feedItem.getChild("link").getValue());
+                siteUrl);
 
-//        holder.image.setImageBitmap(newsItem.getImage());
         holder.title.setText(newsItem.getTitle());
         holder.resource.setText(newsItem.getUrl());
+        holder.feedUrl = feedUrl;
         holder.publishingDate.setText(String.valueOf(newsItem.getTime()));
         holder.description.setText(newsItem.getDescription());
         holder.description.setVisibility(View.INVISIBLE);
-        Glide
-                .with(context)
-                .load(imageUrl)
-                .override(350, 350)
-                .centerCrop()
-                .into(holder.image);
+        holder.imageURL = imageUrl;
+        if (imageUrl != null) {
+            Glide
+                    .with(context)
+                    .load(imageUrl)
+                    .into(holder.image);
+        } else {
+            holder.image.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -126,6 +125,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         private TextView resource;
         private TextView publishingDate;
         private TextView description;
+        String feedUrl;
+        String imageURL;
 
         public NewsViewHolder(View itemView) {
             super(itemView);
@@ -138,23 +139,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    byte[] newsImageBytes = new byte[0];
 
-//                    remove try/catch block when the image problem is resolved
-                    try {
-                        Bitmap newsBitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
-                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                        newsBitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-                        newsImageBytes = bos.toByteArray();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    Intent newsActivityIntent = new Intent(context, NewsActivity.class);
+                            Intent newsActivityIntent = new Intent(context, NewsActivity.class);
                     newsActivityIntent.putExtra("newsTitle", title.getText());
-                    newsActivityIntent.putExtra("newsResource", resource.getText());
+                    newsActivityIntent.putExtra("newsResource", feedUrl);
                     newsActivityIntent.putExtra("newsPublishingDate", publishingDate.getText());
-                    newsActivityIntent.putExtra("newsImage", newsImageBytes);
+                    newsActivityIntent.putExtra("newsImage", imageURL);
                     newsActivityIntent.putExtra("newsDescription", description.getText());
 
                     context.startActivity(newsActivityIntent);
@@ -162,26 +152,4 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             });
         }
     }
-
-//    throws NetworkOnMainThreadException
-
-//    private Bitmap extractFeedImage(String url){
-//        if (url != null) {
-//            if (url.startsWith("http://")) {
-//                url = url.replace("http://", "https://");
-//            }
-//            try {
-//                URL urlConnection = new URL(url);
-//                HttpURLConnection connection = (HttpURLConnection) urlConnection.openConnection();
-//                connection.setDoInput(true);
-//                connection.connect();
-//                InputStream input = connection.getInputStream();
-//                return BitmapFactory.decodeStream(input);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//            return null;
-//        }
-//        return null;
-//    }
 }

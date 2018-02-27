@@ -1,8 +1,10 @@
-package com.example.administrator.rssreader;
+package com.example.administrator.rssreader.View;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.administrator.rssreader.View.MainActivity;
 
 /**
  * Created by Administrator on 21.02.2018.

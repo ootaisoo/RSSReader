@@ -1,39 +1,24 @@
-package com.example.administrator.rssreader;
+package com.example.administrator.rssreader.Presenter;
 
         import android.app.Activity;
         import android.content.Context;
         import android.content.DialogInterface;
         import android.database.Cursor;
         import android.database.sqlite.SQLiteDatabase;
-        import android.graphics.Bitmap;
-        import android.graphics.BitmapFactory;
-        import android.support.v4.app.Fragment;
-        import android.support.v4.app.FragmentActivity;
-        import android.support.v4.app.FragmentManager;
-        import android.support.v4.app.FragmentTransaction;
         import android.support.v4.view.GravityCompat;
-        import android.support.v4.widget.CursorAdapter;
         import android.support.v4.widget.DrawerLayout;
         import android.support.v7.app.AlertDialog;
         import android.support.v7.widget.RecyclerView;
-        import android.util.Log;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
         import android.widget.ImageView;
         import android.widget.TextView;
 
-        import com.example.administrator.rssreader.db.FeedDbHelper;
-        import com.example.administrator.rssreader.db.FeedsContract.FeedEntries;
+        import com.example.administrator.rssreader.Model.FeedDbHelper;
+        import com.example.administrator.rssreader.R;
 
-        import org.w3c.dom.Text;
-
-        import java.util.ArrayList;
-        import java.util.List;
-        import java.util.Observable;
-        import java.util.Observer;
-
-        import static com.example.administrator.rssreader.db.FeedsContract.FeedEntries.*;
+        import static com.example.administrator.rssreader.Model.FeedsContract.FeedEntries.*;
 
 /**
  * Created by Administrator on 25.01.2018.
@@ -45,7 +30,7 @@ public class FeedsAdapter extends CursorRecyclerViewAdapter<FeedsAdapter.FeedsVi
 
     public static final String LOG_TAG = FeedsAdapter.class.getName();
 
-    OnFeedItemSelectedListener onFeedItemSelectedListener;
+    public OnFeedItemSelectedListener onFeedItemSelectedListener;
 
     public interface OnFeedItemSelectedListener {
         public void onFeedItemSelected(String feedUrl);

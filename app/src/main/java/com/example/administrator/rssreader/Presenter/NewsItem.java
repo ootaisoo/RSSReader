@@ -1,4 +1,4 @@
-package com.example.administrator.rssreader;
+package com.example.administrator.rssreader.Presenter;
 
 import android.graphics.Bitmap;
 

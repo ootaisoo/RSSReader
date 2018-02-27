@@ -9,5 +9,6 @@
     <string name="close">Close</string>
     <string name="image_button">ImageButton</string>
     <string name="feed_added">New RSS resource saved</string>
+    <string name="go_to_site">Go to site</string>
 
 </resources>

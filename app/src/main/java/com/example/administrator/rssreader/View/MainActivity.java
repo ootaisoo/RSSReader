@@ -1,15 +1,13 @@
-package com.example.administrator.rssreader;
+package com.example.administrator.rssreader.View;
 
-import android.content.res.Configuration;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
+
+import com.example.administrator.rssreader.Presenter.FeedsAdapter;
+import com.example.administrator.rssreader.R;
 
 public class MainActivity extends AppCompatActivity implements FeedsAdapter.OnFeedItemSelectedListener {
 
@@ -21,8 +19,10 @@ public class MainActivity extends AppCompatActivity implements FeedsAdapter.OnFe
     @Override
     public void onFeedItemSelected(String feedUrl) {
         MainFragment mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.main_fragment);
+        if (mainFragment.newsAdapter != null) {
+            mainFragment.newsAdapter.clear();
+        }
         mainFragment.setRssUrl(feedUrl);
-        mainFragment.getLoaderManager().restartLoader(0, null, mainFragment);
     }
 
     @Override

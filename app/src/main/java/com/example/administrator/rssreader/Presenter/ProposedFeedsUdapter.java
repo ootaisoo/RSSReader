@@ -1,4 +1,4 @@
-package com.example.administrator.rssreader;
+package com.example.administrator.rssreader.Presenter;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,25 +6,23 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.administrator.rssreader.db.FeedDbHelper;
-import com.example.administrator.rssreader.db.FeedsContract.FeedEntries;
+import com.example.administrator.rssreader.Model.FeedDbHelper;
+import com.example.administrator.rssreader.Model.FeedsContract.FeedEntries;
+import com.example.administrator.rssreader.R;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-import static com.example.administrator.rssreader.db.FeedsContract.FeedEntries.URI;
+import static com.example.administrator.rssreader.Model.FeedsContract.FeedEntries.URI;
 
 /**
  * Created by Administrator on 25.01.2018.

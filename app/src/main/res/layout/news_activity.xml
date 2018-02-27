@@ -1,43 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:id="@+id/scroll"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
 
     <TextView
         android:id="@+id/news_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Title"/>
+        android:layout_margin="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="Title" />
 
     <ImageView
         android:id="@+id/news_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:src="@drawable/ic_add_black_36dp"/>
-
-    <TextView
-        android:id="@+id/news_url"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="News URL"/>
-
-    <TextView
-        android:id="@+id/news_publishing_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Publishing Date"/>
+        android:layout_margin="8dp"
+        tools:src="@drawable/ic_add_black_36dp" />
 
     <TextView
         android:id="@+id/news_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Description"/>
+        android:layout_margin="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        tools:text="Description" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <TextView
+            android:id="@+id/news_url"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            tools:text="News URL" />
+
+        <TextView
+            android:id="@+id/news_publishing_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            tools:text="Publishing Date" />
+
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/go_to_site_button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:text="@string/go_to_site" />
+    </LinearLayout>
+</ScrollView>

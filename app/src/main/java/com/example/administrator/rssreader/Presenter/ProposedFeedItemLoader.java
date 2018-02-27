@@ -1,13 +1,10 @@
-package com.example.administrator.rssreader;
+package com.example.administrator.rssreader.Presenter;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.text.Editable;
 import android.util.Log;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -50,13 +47,18 @@ public class ProposedFeedItemLoader extends AsyncTaskLoader<List<ProposedFeedIte
         List<ProposedFeedItem> proposedFeedItemList = new ArrayList<>();
         try {
             Document doc = Jsoup.connect(urlText).get();
-            Elements links = doc.select("link");
+            Elements links = doc.select("link[href]");
             if (links == null || links.isEmpty()){
-                links = doc.select("a");
+                try {
+                    links.addAll(doc.select("a[href]"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
             //extract attributes via jsoup and put them in proposedFeedItemList
             for (Element link : links){
-                if (link.attr("href").contains("rss") || link.attr("href").contains("feed")){
+                if (link.attr("href").contains("rss")){
+                    Log.e(LOG_TAG, "AZAZA");
                     proposedFeedItemList.add(new ProposedFeedItem(link.attr("title"),
                             link.attr("abs:href"),
                             extractFeedImage(doc.select("link[rel*=icon]").attr("abs:href"))));

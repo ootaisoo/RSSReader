@@ -1,39 +1,31 @@
-package com.example.administrator.rssreader;
+package com.example.administrator.rssreader.View;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.CursorLoader;
 import android.content.Intent;
 import android.support.v4.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.CursorAdapter;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 
-import com.example.administrator.rssreader.db.FeedDbHelper;
-import com.example.administrator.rssreader.db.FeedsContract.FeedEntries;
-import com.example.administrator.rssreader.db.FeedsLoader;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.administrator.rssreader.Presenter.DrawerFragmentPresenter;
+import com.example.administrator.rssreader.Presenter.FeedsAdapter;
+import com.example.administrator.rssreader.Model.FeedsLoader;
+import com.example.administrator.rssreader.R;
 
 /**
  * Created by Administrator on 24.01.2018.
  */
 
-public class DrawerFragment extends Fragment implements LoaderCallbacks<Cursor> {
+public class DrawerFragment extends Fragment implements LoaderCallbacks<Cursor>, DrawerView {
 
     public static final String LOG_TAG = DrawerFragment.class.getName();
 
@@ -41,6 +33,8 @@ public class DrawerFragment extends Fragment implements LoaderCallbacks<Cursor> 
 
     RecyclerView drawerRecyclerView;
     FeedsAdapter feedsAdapter;
+    DrawerFragmentPresenter drawerFragmentPresenter;
+
 
     @Override
     public void onAttach(Context context) {
@@ -52,10 +46,9 @@ public class DrawerFragment extends Fragment implements LoaderCallbacks<Cursor> 
             }
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement OnHeadlineSelectedListener");
+                    + " must implement OnFeedItemSelectedListener");
         }
     }
-
 //    is necessary?
     @Override
     public void onDetach() {
@@ -67,6 +60,8 @@ public class DrawerFragment extends Fragment implements LoaderCallbacks<Cursor> 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View drawerFragmentView = inflater.inflate(R.layout.drawer_fragment, container, false);
+
+        drawerFragmentPresenter = new DrawerFragmentPresenter(this);
 
         drawerRecyclerView = drawerFragmentView.findViewById(R.id.drawer_recycler);
         drawerRecyclerView.setHasFixedSize(true);
@@ -82,13 +77,23 @@ public class DrawerFragment extends Fragment implements LoaderCallbacks<Cursor> 
         addFeedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addFeedIntent = new Intent(getActivity(), addFeedActivity.class);
-                startActivity(addFeedIntent);
+                drawerFragmentPresenter.callAddFeedActivity();
             }
         });
-        getLoaderManager().initLoader(URL_LOADER, null, this);
+        drawerFragmentPresenter.initCursorLoader();
 
         return drawerFragmentView;
+    }
+
+    @Override
+    public void callAddFeedActivity() {
+        Intent addFeedIntent = new Intent(getActivity(), AddFeedActivity.class);
+        startActivity(addFeedIntent);
+    }
+
+    @Override
+    public void initCursorLoader() {
+        getLoaderManager().initLoader(URL_LOADER, null, this);
     }
 
     @Override

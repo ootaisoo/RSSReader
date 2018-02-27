@@ -1,8 +1,6 @@
-package com.example.administrator.rssreader;
+package com.example.administrator.rssreader.View;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -17,15 +15,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
+import com.example.administrator.rssreader.Presenter.MainFragmentPresenter;
+import com.example.administrator.rssreader.Presenter.NewsAdapter;
+import com.example.administrator.rssreader.Presenter.NewsLoader;
+import com.example.administrator.rssreader.R;
+
 import java.util.List;
 
 import org.jdom2.Element;
@@ -34,18 +31,28 @@ import org.jdom2.Element;
  * Created by Administrator on 24.01.2018.
  */
 
-public class MainFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Element>> {
+public class MainFragment extends Fragment implements MainView {
 
     public static final String LOG_TAG = MainFragment.class.getName();
 
-    private NewsAdapter newsAdapter;
+    public NewsAdapter newsAdapter;
     private String rssUrl;
     private RecyclerView mainRecyclerView;
     private ProgressBar progressBar;
     private TextView emptyTextView;
+    MainFragmentPresenter mainFragmentPresenter;
+    List<Element> feedItems;
 
     public void setRssUrl(String rssUrl) {
         this.rssUrl = rssUrl;
+        if (rssUrl == null){
+            Log.e(LOG_TAG, "rssUrl == null");
+        }
+        mainFragmentPresenter = new MainFragmentPresenter(this);
+        feedItems = mainFragmentPresenter.loadNews(rssUrl);
+
+        newsAdapter = new NewsAdapter(feedItems, getActivity());
+        mainRecyclerView.setAdapter(newsAdapter);
     }
 
     @Nullable
@@ -53,8 +60,6 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View mainFragmentView = inflater.inflate(R.layout.main_fragment, container, false);
 
-        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
         progressBar = (ProgressBar) mainFragmentView.findViewById(R.id.progress_bar);
         emptyTextView = (TextView) mainFragmentView.findViewById(R.id.empty_view);
 
@@ -66,29 +71,19 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), layoutManager.getOrientation());
         mainRecyclerView.addItemDecoration(dividerItemDecoration);
 
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            getLoaderManager().initLoader(0, null, MainFragment.this);
-        } else {
-            progressBar.setVisibility(View.GONE);
-            emptyTextView.setText(R.string.no_internet_connection);
-        }
+        mainFragmentPresenter = new MainFragmentPresenter(this);
 
-        return mainFragmentView;
-    }
-
-    @Override
-    public Loader<List<Element>> onCreateLoader(int id, Bundle args) {
-        Log.e(LOG_TAG, "onCreateLoader");
-        emptyTextView.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
-        return new NewsLoader(rssUrl, getActivity());
-    }
-
-    @Override
-    public void onLoadFinished(Loader<List<Element>> loader, List<Element> feedItems) {
-        Log.e(LOG_TAG, "onLoadFinished");
-
-        progressBar.setVisibility(View.GONE);
+//        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
+//        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+//            emptyTextView.setVisibility(View.GONE);
+//            progressBar.setVisibility(View.VISIBLE);
+//            feedItems = mainFragmentPresenter.loadNews(rssUrl);
+//            progressBar.setVisibility(View.GONE);
+//        } else {
+//            progressBar.setVisibility(View.GONE);
+//            emptyTextView.setText(R.string.no_internet_connection);
+//        }
 
         if (feedItems == null || feedItems.isEmpty()){
             emptyTextView.setText(R.string.choose_feed);
@@ -100,10 +95,6 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
             newsAdapter = new NewsAdapter(feedItems, getActivity());
             mainRecyclerView.setAdapter(newsAdapter);
         }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<List<Element>> loader) {
-
+        return mainFragmentView;
     }
 }

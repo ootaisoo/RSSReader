@@ -1,11 +1,9 @@
-package com.example.administrator.rssreader;
+package com.example.administrator.rssreader.Presenter;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DataSetObserver;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 /**
  * Created by Administrator on 25.01.2018.

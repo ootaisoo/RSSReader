@@ -1,13 +1,10 @@
-package com.example.administrator.rssreader;
+package com.example.administrator.rssreader.Presenter;
 
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
-import com.example.administrator.rssreader.db.FeedsContract;
-
-import java.net.URL;
+import com.example.administrator.rssreader.Model.FeedsContract;
 
 /**
  * Created by Administrator on 25.01.2018.

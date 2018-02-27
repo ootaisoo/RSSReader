@@ -1,4 +1,4 @@
-package com.example.administrator.rssreader;
+package com.example.administrator.rssreader.View;
 
 import android.app.LoaderManager;
 import android.content.Loader;
@@ -8,28 +8,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.URLUtil;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
+import com.example.administrator.rssreader.Presenter.AddFeedPresenter;
+import com.example.administrator.rssreader.Presenter.ProposedFeedItem;
+import com.example.administrator.rssreader.Presenter.ProposedFeedItemLoader;
+import com.example.administrator.rssreader.Presenter.ProposedFeedsUdapter;
+import com.example.administrator.rssreader.R;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -37,10 +33,11 @@ import java.util.List;
  * Created by Administrator on 25.01.2018.
  */
 
-public class addFeedActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<ProposedFeedItem>> {
+public class AddFeedActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<ProposedFeedItem>>, AddFeedView {
 
-    public static final String LOG_TAG = addFeedActivity.class.getName();
+    public static final String LOG_TAG = AddFeedActivity.class.getName();
 
+    private AddFeedPresenter addFeedPresenter;
     private ProposedFeedsUdapter proposedFeedsUdapter;
     private EditText urlText;
     private String baseUrl;
@@ -53,12 +50,14 @@ public class addFeedActivity extends AppCompatActivity implements LoaderManager.
         setContentView(R.layout.add_feed_activity);
         urlText = findViewById(R.id.edit_search);
 
+        addFeedPresenter = new AddFeedPresenter(this);
+
 //        Performs rss url search via keyboard search button.
         urlText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    performSearch();
+                    addFeedPresenter.performFeedSearch();
                     return true;
                 }
                 return false;
@@ -80,7 +79,7 @@ public class addFeedActivity extends AppCompatActivity implements LoaderManager.
         searchURLButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                performSearch();
+                addFeedPresenter.performFeedSearch();
             }
         });
     }
@@ -94,7 +93,7 @@ public class addFeedActivity extends AppCompatActivity implements LoaderManager.
     public void onLoadFinished(Loader<List<ProposedFeedItem>> loader, List<ProposedFeedItem> proposedFeedItemList) {
         progressBar.setVisibility(View.GONE);
         if (proposedFeedItemList != null && !proposedFeedItemList.isEmpty()){
-            proposedFeedsUdapter = new ProposedFeedsUdapter(proposedFeedItemList, addFeedActivity.this);
+            proposedFeedsUdapter = new ProposedFeedsUdapter(proposedFeedItemList, AddFeedActivity.this);
             feedsRecyclerView.setAdapter(proposedFeedsUdapter);
         } else {
             Toast.makeText(this, R.string.invalid_url, Toast.LENGTH_SHORT).show();
@@ -125,8 +124,10 @@ public class addFeedActivity extends AppCompatActivity implements LoaderManager.
         }
     }
 
-    private void performSearch(){
-        InputMethodManager mgr = (InputMethodManager) getSystemService(addFeedActivity.INPUT_METHOD_SERVICE);
+
+    @Override
+    public void performFeedSearch(){
+        InputMethodManager mgr = (InputMethodManager) getSystemService(AddFeedActivity.INPUT_METHOD_SERVICE);
         mgr.hideSoftInputFromWindow(urlText.getWindowToken(), 0);
         if (proposedFeedsUdapter != null) {
             proposedFeedsUdapter.clear();
@@ -140,6 +141,6 @@ public class addFeedActivity extends AppCompatActivity implements LoaderManager.
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        getLoaderManager().restartLoader(0, null, addFeedActivity.this);
+        getLoaderManager().restartLoader(0, null, AddFeedActivity.this);
     }
 }

@@ -1,10 +1,9 @@
-package com.example.administrator.rssreader.db;
+package com.example.administrator.rssreader.Model;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.content.AsyncTaskLoader;
-import android.util.Log;
 
 /**
  * Created by Administrator on 05.02.2018.
