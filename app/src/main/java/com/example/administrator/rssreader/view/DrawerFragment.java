@@ -1,9 +1,7 @@
-package com.example.administrator.rssreader.View;
+package com.example.administrator.rssreader.view;
 
 import android.content.Context;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.content.Intent;
-import android.support.v4.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,16 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.example.administrator.rssreader.Presenter.DrawerFragmentPresenter;
-import com.example.administrator.rssreader.Presenter.FeedsAdapter;
-import com.example.administrator.rssreader.Model.FeedsLoader;
+import com.example.administrator.rssreader.presenter.DrawerFragmentPresenter;
+import com.example.administrator.rssreader.FeedsAdapter;
 import com.example.administrator.rssreader.R;
 
 /**
  * Created by Administrator on 24.01.2018.
  */
 
-public class DrawerFragment extends Fragment implements LoaderCallbacks<Cursor>, DrawerView {
+public class DrawerFragment extends Fragment implements DrawerView {
 
     public static final String LOG_TAG = DrawerFragment.class.getName();
 
@@ -34,7 +31,6 @@ public class DrawerFragment extends Fragment implements LoaderCallbacks<Cursor>,
     RecyclerView drawerRecyclerView;
     FeedsAdapter feedsAdapter;
     DrawerFragmentPresenter drawerFragmentPresenter;
-
 
     @Override
     public void onAttach(Context context) {
@@ -49,7 +45,7 @@ public class DrawerFragment extends Fragment implements LoaderCallbacks<Cursor>,
                     + " must implement OnFeedItemSelectedListener");
         }
     }
-//    is necessary?
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -67,7 +63,6 @@ public class DrawerFragment extends Fragment implements LoaderCallbacks<Cursor>,
         drawerRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         drawerRecyclerView.setLayoutManager(layoutManager);
-
         drawerRecyclerView.setAdapter(feedsAdapter);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), layoutManager.getOrientation());
@@ -80,7 +75,7 @@ public class DrawerFragment extends Fragment implements LoaderCallbacks<Cursor>,
                 drawerFragmentPresenter.callAddFeedActivity();
             }
         });
-        drawerFragmentPresenter.initCursorLoader();
+        drawerFragmentPresenter.loadFromDb();
 
         return drawerFragmentView;
     }
@@ -92,29 +87,12 @@ public class DrawerFragment extends Fragment implements LoaderCallbacks<Cursor>,
     }
 
     @Override
-    public void initCursorLoader() {
-        getLoaderManager().initLoader(URL_LOADER, null, this);
+    public Context getViewContext() {
+        return getActivity();
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int loaderID, Bundle bundle) {
-        switch (loaderID){
-            case URL_LOADER:
-                return new FeedsLoader(getActivity());
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        if (cursor == null){
-        }
+    public void onCursorLoaded(Cursor cursor) {
         feedsAdapter.swapCursor(cursor);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        feedsAdapter.swapCursor(null);
     }
 }

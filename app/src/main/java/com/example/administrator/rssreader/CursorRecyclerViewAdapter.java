@@ -1,4 +1,4 @@
-package com.example.administrator.rssreader.Presenter;
+package com.example.administrator.rssreader;
 
 import android.content.Context;
 import android.database.Cursor;

@@ -1,4 +1,4 @@
-package com.example.administrator.rssreader.Presenter;
+package com.example.administrator.rssreader;
 
         import android.app.Activity;
         import android.content.Context;
@@ -15,10 +15,9 @@ package com.example.administrator.rssreader.Presenter;
         import android.widget.ImageView;
         import android.widget.TextView;
 
-        import com.example.administrator.rssreader.Model.FeedDbHelper;
-        import com.example.administrator.rssreader.R;
+        import com.example.administrator.rssreader.model.FeedDbHelper;
 
-        import static com.example.administrator.rssreader.Model.FeedsContract.FeedEntries.*;
+        import static com.example.administrator.rssreader.model.FeedsContract.FeedEntries.*;
 
 /**
  * Created by Administrator on 25.01.2018.
@@ -71,28 +70,11 @@ public class FeedsAdapter extends CursorRecyclerViewAdapter<FeedsAdapter.FeedsVi
                 @Override
                 public void onClick(View view) {
                     onFeedItemSelectedListener.onFeedItemSelected(feedUrl);
-//                    FragmentManager fragmentManager = ((FragmentActivity)context).getSupportFragmentManager();
-//
-//                    Fragment mainFragment = fragmentManager.findFragmentById(R.id.main_fragment);
-//                    Fragment drawerFragment = fragmentManager.findFragmentById(R.id.drawer_fragment);
 
-//                    Log.e(LOG_TAG, "OnClick");
-//                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-//                    Log.e(LOG_TAG, "beginTransaction()");
-//                    transaction.replace(R.id.drawer_fragment, mainFragment);
-//                    Log.e(LOG_TAG, "transaction.replace");
-//                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//                    Log.e(LOG_TAG, "transaction.setTransition");
-//                    transaction.addToBackStack(null);
-//                    Log.e(LOG_TAG, "transaction.addToBackStack");
-//                    transaction.commit();
-//                    Log.e(LOG_TAG, "transaction.commit()");
-//                    fragmentManager.executePendingTransactions();
                     DrawerLayout drawerLayout = ((Activity)context).findViewById(R.id.drawer_layout);
                     drawerLayout.closeDrawer(GravityCompat.START);
                 }
             });
-
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

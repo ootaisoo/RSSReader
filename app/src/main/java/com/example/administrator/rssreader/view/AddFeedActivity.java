@@ -1,7 +1,5 @@
-package com.example.administrator.rssreader.View;
+package com.example.administrator.rssreader.view;
 
-import android.app.LoaderManager;
-import android.content.Loader;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,18 +10,17 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.URLUtil;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.administrator.rssreader.Presenter.AddFeedPresenter;
-import com.example.administrator.rssreader.Presenter.ProposedFeedItem;
-import com.example.administrator.rssreader.Presenter.ProposedFeedItemLoader;
-import com.example.administrator.rssreader.Presenter.ProposedFeedsUdapter;
+import com.example.administrator.rssreader.presenter.AddFeedPresenter;
+import com.example.administrator.rssreader.ProposedFeedItem;
+import com.example.administrator.rssreader.ProposedFeedsUdapter;
 import com.example.administrator.rssreader.R;
+import com.example.administrator.rssreader.Utils;
 
 import java.net.MalformedURLException;
 import java.util.List;
@@ -33,7 +30,7 @@ import java.util.List;
  * Created by Administrator on 25.01.2018.
  */
 
-public class AddFeedActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<ProposedFeedItem>>, AddFeedView {
+public class AddFeedActivity extends AppCompatActivity implements AddFeedView {
 
     public static final String LOG_TAG = AddFeedActivity.class.getName();
 
@@ -84,13 +81,7 @@ public class AddFeedActivity extends AppCompatActivity implements LoaderManager.
         });
     }
 
-    @Override
-    public Loader<List<ProposedFeedItem>> onCreateLoader(int i, Bundle bundle) {
-        return new ProposedFeedItemLoader(baseUrl,this);
-    }
-
-    @Override
-    public void onLoadFinished(Loader<List<ProposedFeedItem>> loader, List<ProposedFeedItem> proposedFeedItemList) {
+    public void onProposedFeedsLoaded(List<ProposedFeedItem> proposedFeedItemList) {
         progressBar.setVisibility(View.GONE);
         if (proposedFeedItemList != null && !proposedFeedItemList.isEmpty()){
             proposedFeedsUdapter = new ProposedFeedsUdapter(proposedFeedItemList, AddFeedActivity.this);
@@ -99,31 +90,6 @@ public class AddFeedActivity extends AppCompatActivity implements LoaderManager.
             Toast.makeText(this, R.string.invalid_url, Toast.LENGTH_SHORT).show();
         }
     }
-
-    @Override
-    public void onLoaderReset(Loader<List<ProposedFeedItem>> loader) {
-    }
-
-    //is httpsUrl redundant?
-    public String makeValidUrl(String url) throws MalformedURLException{
-        if (!URLUtil.isValidUrl(url)) {
-            String httpUrl = "http://" + url;
-            if (!URLUtil.isValidUrl(httpUrl)) {
-                String httpsUrl = "https://" + url;
-                if (!URLUtil.isValidUrl(httpsUrl)) {
-                    Toast.makeText(this, R.string.invalid_url, Toast.LENGTH_SHORT).show();
-                    return null;
-                } else {
-                    return httpsUrl;
-                }
-            } else {
-                return httpUrl;
-            }
-        } else {
-            return url;
-        }
-    }
-
 
     @Override
     public void performFeedSearch(){
@@ -137,10 +103,10 @@ public class AddFeedActivity extends AppCompatActivity implements LoaderManager.
 
         baseUrl = urlText.getText().toString().trim();
         try {
-            baseUrl = makeValidUrl(baseUrl);
+            baseUrl = Utils.makeValidUrl(baseUrl, this);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        getLoaderManager().restartLoader(0, null, AddFeedActivity.this);
+        addFeedPresenter.loadProposedFeeds(baseUrl);
     }
 }

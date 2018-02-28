@@ -1,4 +1,4 @@
-package com.example.administrator.rssreader.Presenter;
+package com.example.administrator.rssreader;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +11,7 @@ import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
-import com.example.administrator.rssreader.R;
-import com.example.administrator.rssreader.View.NewsActivity;
+import com.example.administrator.rssreader.view.NewsActivity;
 
 import org.jdom2.Element;
 

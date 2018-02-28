@@ -1,7 +1,6 @@
-package com.example.administrator.rssreader.Presenter;
+package com.example.administrator.rssreader;
 
 import android.graphics.Bitmap;
-import android.widget.Button;
 
 /**
  * Created by Administrator on 25.01.2018.

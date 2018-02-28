@@ -1,4 +1,4 @@
-package com.example.administrator.rssreader.Model;
+package com.example.administrator.rssreader.model;
 
 import android.net.Uri;
 import android.provider.BaseColumns;

@@ -12,15 +12,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".View.MainActivity">
+        <activity android:name=".view.MainActivity">
 
         </activity>
-        <activity android:name=".View.AddFeedActivity"
+        <activity android:name=".view.AddFeedActivity"
             android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".View.NewsActivity"/>
+        <activity android:name=".view.NewsActivity"/>
 
         <activity
-            android:name=".View.SplashActivity"
+            android:name=".view.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

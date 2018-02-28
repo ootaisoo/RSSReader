@@ -1,16 +1,14 @@
-package com.example.administrator.rssreader.Presenter;
+package com.example.administrator.rssreader.presenter;
 
-import android.content.Context;
-
-import com.example.administrator.rssreader.View.NewsView;
+import com.example.administrator.rssreader.view.NewsView;
 
 /**
  * Created by Administrator on 26.02.2018.
  */
 
-public class NewsPresenter {
+public class NewsPresenter extends BasePresenter {
 
-    NewsView newsView;
+    private NewsView newsView;
 
     public NewsPresenter(NewsView newsView) {
         this.newsView = newsView;

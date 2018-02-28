@@ -1,4 +1,4 @@
-package com.example.administrator.rssreader.View;
+package com.example.administrator.rssreader.view;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -10,9 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.example.administrator.rssreader.Presenter.NewsPresenter;
-import com.example.administrator.rssreader.Presenter.Utils;
+import com.example.administrator.rssreader.presenter.NewsPresenter;
+import com.example.administrator.rssreader.Utils;
 import com.example.administrator.rssreader.R;
 
 /**
@@ -63,7 +62,6 @@ public class NewsActivity extends AppCompatActivity implements NewsView {
         });
     }
 
- // is it right to place this method here not in Utils class?
     @Override
     public void goToSite(String url) {
         Uri uri = Uri.parse(url);

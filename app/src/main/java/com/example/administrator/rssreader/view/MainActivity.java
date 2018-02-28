@@ -1,4 +1,4 @@
-package com.example.administrator.rssreader.View;
+package com.example.administrator.rssreader.view;
 
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.administrator.rssreader.Presenter.FeedsAdapter;
+import com.example.administrator.rssreader.FeedsAdapter;
 import com.example.administrator.rssreader.R;
 
 public class MainActivity extends AppCompatActivity implements FeedsAdapter.OnFeedItemSelectedListener {

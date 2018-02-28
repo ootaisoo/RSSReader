@@ -1,8 +1,4 @@
-package com.example.administrator.rssreader.Presenter;
-
-import android.graphics.Bitmap;
-
-import java.net.URL;
+package com.example.administrator.rssreader;
 
 /**
  * Created by Administrator on 25.01.2018.

@@ -1,4 +1,4 @@
-package com.example.administrator.rssreader.Presenter;
+package com.example.administrator.rssreader;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -15,14 +15,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.administrator.rssreader.Model.FeedDbHelper;
-import com.example.administrator.rssreader.Model.FeedsContract.FeedEntries;
-import com.example.administrator.rssreader.R;
+import com.example.administrator.rssreader.model.FeedDbHelper;
+import com.example.administrator.rssreader.model.FeedsContract.FeedEntries;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-import static com.example.administrator.rssreader.Model.FeedsContract.FeedEntries.URI;
+import static com.example.administrator.rssreader.model.FeedsContract.FeedEntries.URI;
 
 /**
  * Created by Administrator on 25.01.2018.
