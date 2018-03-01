@@ -16,7 +16,13 @@
 
         </activity>
         <activity android:name=".view.AddFeedActivity"
-            android:windowSoftInputMode="stateHidden"/>
+            android:parentActivityName=".view.MainActivity"
+            android:windowSoftInputMode="stateHidden">
+
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".view.MainActivity" />
+        </activity>
         <activity android:name=".view.NewsActivity"/>
 
         <activity

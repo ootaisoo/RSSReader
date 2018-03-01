@@ -2,6 +2,7 @@ package com.example.administrator.rssreader.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import com.example.administrator.rssreader.ProposedFeedItem;
 import com.example.administrator.rssreader.ProposedFeedsUdapter;
 import com.example.administrator.rssreader.R;
 import com.example.administrator.rssreader.Utils;
+import com.example.administrator.rssreader.presenter.DrawerFragmentPresenter;
 
 import java.net.MalformedURLException;
 import java.util.List;
@@ -30,7 +32,7 @@ import java.util.List;
  * Created by Administrator on 25.01.2018.
  */
 
-public class AddFeedActivity extends AppCompatActivity implements AddFeedView {
+public class AddFeedActivity extends BaseActivity<AddFeedPresenter> implements AddFeedView {
 
     public static final String LOG_TAG = AddFeedActivity.class.getName();
 
@@ -40,6 +42,13 @@ public class AddFeedActivity extends AppCompatActivity implements AddFeedView {
     private String baseUrl;
     private RecyclerView feedsRecyclerView;
     private ProgressBar progressBar;
+
+    @Override
+    protected void inject() {
+        if (getPresenter() == null) {
+            setPresenter(addFeedPresenter = new AddFeedPresenter(this));
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,6 +88,9 @@ public class AddFeedActivity extends AppCompatActivity implements AddFeedView {
                 addFeedPresenter.performFeedSearch();
             }
         });
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     public void onProposedFeedsLoaded(List<ProposedFeedItem> proposedFeedItemList) {

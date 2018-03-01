@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.administrator.rssreader.presenter.AddFeedPresenter;
 import com.example.administrator.rssreader.presenter.NewsPresenter;
 import com.example.administrator.rssreader.Utils;
 import com.example.administrator.rssreader.R;
@@ -18,14 +19,22 @@ import com.example.administrator.rssreader.R;
  * Created by Administrator on 16.02.2018.
  */
 
-public class NewsActivity extends AppCompatActivity implements NewsView {
+public class NewsActivity extends BaseActivity<NewsPresenter> implements NewsView {
 
     public static final String LOG_TAG = NewsActivity.class.getName();
 
     NewsPresenter newsPresenter;
 
     @Override
+    protected void inject() {
+        if (getPresenter() == null) {
+            setPresenter(newsPresenter = new NewsPresenter(this));
+        }
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        inject();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_activity);
 

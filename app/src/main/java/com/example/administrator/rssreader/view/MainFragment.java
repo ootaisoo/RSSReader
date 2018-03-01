@@ -28,7 +28,7 @@ import org.jdom2.Element;
  * Created by Administrator on 24.01.2018.
  */
 
-public class MainFragment extends Fragment implements MainView {
+public class MainFragment extends BaseFragment<MainFragmentPresenter> implements MainView {
 
     public static final String LOG_TAG = MainFragment.class.getName();
 
@@ -43,6 +43,19 @@ public class MainFragment extends Fragment implements MainView {
         progressBar.setVisibility(View.VISIBLE);
         mainFragmentPresenter = new MainFragmentPresenter(this);
         mainFragmentPresenter.loadNews(rssUrl);
+    }
+
+    @Override
+    protected void inject() {
+        if (getPresenter() == null) {
+            setPresenter(mainFragmentPresenter = new MainFragmentPresenter(this));
+        }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        inject();
+        super.onCreate(savedInstanceState);
     }
 
     @Nullable

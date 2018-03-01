@@ -17,12 +17,13 @@ import android.widget.ImageButton;
 import com.example.administrator.rssreader.presenter.DrawerFragmentPresenter;
 import com.example.administrator.rssreader.FeedsAdapter;
 import com.example.administrator.rssreader.R;
+import com.example.administrator.rssreader.presenter.MainFragmentPresenter;
 
 /**
  * Created by Administrator on 24.01.2018.
  */
 
-public class DrawerFragment extends Fragment implements DrawerView {
+public class DrawerFragment extends BaseFragment<DrawerFragmentPresenter> implements DrawerView {
 
     public static final String LOG_TAG = DrawerFragment.class.getName();
 
@@ -31,6 +32,19 @@ public class DrawerFragment extends Fragment implements DrawerView {
     RecyclerView drawerRecyclerView;
     FeedsAdapter feedsAdapter;
     DrawerFragmentPresenter drawerFragmentPresenter;
+
+    @Override
+    protected void inject() {
+        if (getPresenter() == null) {
+            setPresenter(drawerFragmentPresenter = new DrawerFragmentPresenter(this));
+        }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        inject();
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public void onAttach(Context context) {

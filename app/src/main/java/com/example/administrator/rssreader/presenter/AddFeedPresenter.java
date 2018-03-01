@@ -15,6 +15,7 @@ public class AddFeedPresenter extends BasePresenter {
     AddFeedView addFeedView;
 
     public AddFeedPresenter(AddFeedView addFeedView) {
+        super(addFeedView);
         this.addFeedView = addFeedView;
     }
 

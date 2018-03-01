@@ -3,13 +3,8 @@ package com.example.administrator.rssreader.model;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-/**
- * Created by Administrator on 31.01.2018.
- */
-
 public final class FeedsContract {
     public FeedsContract() {}
-
 
     public static final class FeedEntries implements BaseColumns{
         public static final Uri URI = Uri.parse("sqlite://com.example.administrator.rssreader/feeds");

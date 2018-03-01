@@ -14,6 +14,7 @@ public class DrawerFragmentPresenter extends BasePresenter {
     private DrawerView drawerView;
 
     public DrawerFragmentPresenter(DrawerView drawerView) {
+        super(drawerView);
         this.drawerView = drawerView;
     }
 

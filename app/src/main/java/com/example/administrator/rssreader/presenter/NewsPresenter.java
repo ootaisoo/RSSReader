@@ -11,6 +11,7 @@ public class NewsPresenter extends BasePresenter {
     private NewsView newsView;
 
     public NewsPresenter(NewsView newsView) {
+        super(newsView);
         this.newsView = newsView;
     }
 

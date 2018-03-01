@@ -7,7 +7,7 @@ import android.database.Cursor;
  * Created by Administrator on 25.02.2018.
  */
 
-public interface DrawerView {
+public interface DrawerView extends MvpView {
     void callAddFeedActivity();
     void onCursorLoaded(Cursor cursor);
     Context getViewContext();

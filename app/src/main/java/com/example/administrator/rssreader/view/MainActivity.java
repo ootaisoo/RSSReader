@@ -1,5 +1,6 @@
 package com.example.administrator.rssreader.view;
 
+import android.content.res.Configuration;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import com.example.administrator.rssreader.R;
 public class MainActivity extends AppCompatActivity implements FeedsAdapter.OnFeedItemSelectedListener {
 
     public static final String LOG_TAG = MainActivity.class.getName();
+
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -41,13 +43,12 @@ public class MainActivity extends AppCompatActivity implements FeedsAdapter.OnFe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
-    //    @Override
-//    public void onConfigurationChanged(Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//        setContentView(R.layout.activity_main);
-//    }
+        @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        setContentView(R.layout.activity_main);
+    }
 }

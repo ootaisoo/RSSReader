@@ -8,6 +8,6 @@ import java.util.List;
  * Created by Administrator on 24.02.2018.
  */
 
-public interface MainView {
+public interface MainView extends MvpView {
     void onFeedsLoaded(List<Element> items);
 }

@@ -19,6 +19,7 @@ public class MainFragmentPresenter extends BasePresenter {
     private MainView view;
 
     public MainFragmentPresenter(MainView view) {
+        super(view);
         this.view = view;
     }
 
