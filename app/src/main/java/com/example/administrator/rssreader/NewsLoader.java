@@ -1,6 +1,7 @@
 package com.example.administrator.rssreader;
 
 import android.os.Handler;
+import android.util.Log;
 
 
 import org.jdom2.Document;

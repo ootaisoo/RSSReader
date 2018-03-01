@@ -44,9 +44,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     }
 
     public void clear() {
-        final int size = feedItems.size();
         feedItems.clear();
-        notifyItemRangeRemoved(0, size);
+        notifyDataSetChanged();
+    }
+
+    public void addAll(List<Element> list) {
+        feedItems.addAll(list);
+        notifyDataSetChanged();
     }
 
     @Override
