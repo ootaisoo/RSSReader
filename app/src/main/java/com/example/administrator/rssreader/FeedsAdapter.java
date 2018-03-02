@@ -72,7 +72,9 @@ public class FeedsAdapter extends CursorRecyclerViewAdapter<FeedsAdapter.FeedsVi
                     onFeedItemSelectedListener.onFeedItemSelected(feedUrl);
 
                     DrawerLayout drawerLayout = ((Activity)context).findViewById(R.id.drawer_layout);
-                    drawerLayout.closeDrawer(GravityCompat.START);
+                    if (drawerLayout != null) {
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                    }
                 }
             });
 

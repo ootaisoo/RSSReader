@@ -1,5 +1,6 @@
 package com.example.administrator.rssreader.view;
 
+import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,11 +21,10 @@ public class MainActivity extends AppCompatActivity implements FeedsAdapter.OnFe
 
     @Override
     public void onFeedItemSelected(String feedUrl) {
-        MainFragment mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.main_fragment);
+        MainFragment mainFragment = MainFragment.newInstance(feedUrl);
         if (mainFragment.newsAdapter != null) {
             mainFragment.newsAdapter.clear();
         }
-        mainFragment.setRssUrl(feedUrl);
     }
 
     @Override
@@ -35,8 +35,10 @@ public class MainActivity extends AppCompatActivity implements FeedsAdapter.OnFe
         drawerLayout = findViewById(R.id.drawer_layout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
 
-        drawerLayout.addDrawerListener(drawerToggle);
-        drawerToggle.syncState();
+        if (drawerLayout != null) {
+            drawerLayout.addDrawerListener(drawerToggle);
+            drawerToggle.syncState();
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

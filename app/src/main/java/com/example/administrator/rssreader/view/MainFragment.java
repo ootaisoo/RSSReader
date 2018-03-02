@@ -30,7 +30,7 @@ import org.jdom2.Element;
  * Created by Administrator on 24.01.2018.
  */
 
-public class MainFragment extends BaseFragment implements MainView {
+public class MainFragment extends BaseFragment<MainFragmentPresenter> implements MainView {
 
     public static final String LOG_TAG = MainFragment.class.getName();
 
@@ -43,25 +43,26 @@ public class MainFragment extends BaseFragment implements MainView {
     private SwipeRefreshLayout swipeContainer;
     List<Element> feedItems;
 
-    public void setRssUrl(String rssUrl) {
-        this.rssUrl = rssUrl;
-        emptyTextView.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
-        mainFragmentPresenter = new MainFragmentPresenter(this);
-        mainFragmentPresenter.loadNews(rssUrl);
+    public static MainFragment newInstance(String rssUrl){
+        MainFragment mainFragment = new MainFragment();
+        Bundle args = new Bundle();
+        args.putString("rssUrl", rssUrl);
+        mainFragment.setArguments(args);
+        return mainFragment;
     }
 
     @Override
     protected void inject() {
-        if (getPresenter() == null) {
-            setPresenter(mainFragmentPresenter = new MainFragmentPresenter(this));
-        }
+            setPresenter(new MainFragmentPresenter(this));
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         inject();
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            rssUrl = getArguments().getString("rssUrl");
+        }
     }
 
     @Nullable
@@ -84,6 +85,10 @@ public class MainFragment extends BaseFragment implements MainView {
         feedItems = new ArrayList<>();
         newsAdapter = new NewsAdapter(feedItems, getActivity());
 
+        emptyTextView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        getPresenter().loadNews(rssUrl);
+
         mainRecyclerView = mainFragmentView.findViewById(R.id.main_recycler);
         mainRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -92,8 +97,6 @@ public class MainFragment extends BaseFragment implements MainView {
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), layoutManager.getOrientation());
         mainRecyclerView.addItemDecoration(dividerItemDecoration);
-
-        mainFragmentPresenter = new MainFragmentPresenter(this);
 
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();

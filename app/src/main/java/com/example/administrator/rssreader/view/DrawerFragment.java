@@ -23,7 +23,7 @@ import com.example.administrator.rssreader.presenter.MainFragmentPresenter;
  * Created by Administrator on 24.01.2018.
  */
 
-public class DrawerFragment extends BaseFragment implements DrawerView {
+public class DrawerFragment extends BaseFragment<DrawerFragmentPresenter> implements DrawerView {
 
     public static final String LOG_TAG = DrawerFragment.class.getName();
 
@@ -35,9 +35,8 @@ public class DrawerFragment extends BaseFragment implements DrawerView {
 
     @Override
     protected void inject() {
-        if (getPresenter() == null) {
-            setPresenter(drawerFragmentPresenter = new DrawerFragmentPresenter(this));
-        }
+            setPresenter(new DrawerFragmentPresenter(this));
+
     }
 
     @Override

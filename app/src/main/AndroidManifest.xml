@@ -23,8 +23,13 @@
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".view.MainActivity" />
         </activity>
-        <activity android:name=".view.NewsActivity"/>
+        <activity android:name=".view.NewsActivity"
+            android:parentActivityName=".view.MainActivity">
 
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".view.MainActivity" />
+        </activity>
         <activity
             android:name=".view.SplashActivity"
             android:theme="@style/SplashTheme">

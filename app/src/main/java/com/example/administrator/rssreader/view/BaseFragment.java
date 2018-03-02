@@ -11,15 +11,15 @@ import com.example.administrator.rssreader.presenter.BasePresenter;
  * Created by Administrator on 28.02.2018.
  */
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
 
-    private BasePresenter presenter;
+    private P presenter;
 
-    protected BasePresenter getPresenter() {
+    protected P getPresenter() {
         return presenter;
     }
 
-    protected void setPresenter(BasePresenter presenter) {
+    protected void setPresenter(P presenter) {
         this.presenter = presenter;
     }
 
