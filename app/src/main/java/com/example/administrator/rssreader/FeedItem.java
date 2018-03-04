@@ -6,10 +6,6 @@ import android.graphics.BitmapFactory;
 
 import com.example.administrator.rssreader.model.FeedsContract;
 
-/**
- * Created by Administrator on 25.01.2018.
- */
-
 public class FeedItem {
 
     public static final String LOG_TAG = FeedItem.class.getName();

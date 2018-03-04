@@ -2,7 +2,6 @@ package com.example.administrator.rssreader.view.utils;
 
 import android.os.Handler;
 
-
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -14,10 +13,6 @@ import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by Administrator on 10.02.2018.
- */
 
 public class NewsLoader {
 

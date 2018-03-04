@@ -19,11 +19,9 @@ import com.example.administrator.rssreader.FeedItem;
 import com.example.administrator.rssreader.R;
 import com.example.administrator.rssreader.model.FeedDbHelper;
 
-import static com.example.administrator.rssreader.model.FeedsContract.FeedEntries.*;
-
-/**
- * Created by Administrator on 25.01.2018.
- */
+import static com.example.administrator.rssreader.model.FeedsContract.FeedEntries.FEED_NAME;
+import static com.example.administrator.rssreader.model.FeedsContract.FeedEntries.TABLE_NAME;
+import static com.example.administrator.rssreader.model.FeedsContract.FeedEntries.URI;
 
 public class FeedsAdapter extends CursorRecyclerViewAdapter<FeedsAdapter.FeedsViewHolder> {
 
@@ -34,7 +32,7 @@ public class FeedsAdapter extends CursorRecyclerViewAdapter<FeedsAdapter.FeedsVi
     public OnFeedItemSelectedListener onFeedItemSelectedListener;
 
     public interface OnFeedItemSelectedListener {
-        public void onFeedItemSelected(String feedUrl);
+        void onFeedItemSelected(String feedUrl);
     }
 
     public FeedsAdapter(Context context, Cursor cursor) {
@@ -45,8 +43,7 @@ public class FeedsAdapter extends CursorRecyclerViewAdapter<FeedsAdapter.FeedsVi
     @Override
     public FeedsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.feeds_holder, parent, false);
-        FeedsViewHolder holder = new FeedsViewHolder(view);
-        return holder;
+        return new FeedsViewHolder(view);
     }
 
     @Override

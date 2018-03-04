@@ -10,10 +10,6 @@ import com.example.administrator.rssreader.R;
 
 import java.net.MalformedURLException;
 
-/**
- * Created by Administrator on 26.02.2018.
- */
-
 public class Utils {
 
     public static void setImageFromUrl(Context context, ImageView imageView, String url) {
@@ -44,6 +40,4 @@ public class Utils {
             return url;
         }
     }
-
-
 }

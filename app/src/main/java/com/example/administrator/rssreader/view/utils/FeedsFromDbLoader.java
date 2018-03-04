@@ -11,10 +11,6 @@ import com.example.administrator.rssreader.model.FeedsContract;
 
 import java.lang.ref.WeakReference;
 
-/**
- * Created by Administrator on 05.02.2018.
- */
-
 public class FeedsFromDbLoader {
 
     public static final String LOG_TAG = FeedsFromDbLoader.class.getName();

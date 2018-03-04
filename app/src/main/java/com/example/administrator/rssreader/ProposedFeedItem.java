@@ -2,10 +2,6 @@ package com.example.administrator.rssreader;
 
 import android.graphics.Bitmap;
 
-/**
- * Created by Administrator on 25.01.2018.
- */
-
 public class ProposedFeedItem {
 
     private String feedName;

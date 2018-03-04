@@ -1,23 +1,17 @@
 package com.example.administrator.rssreader;
 
-/**
- * Created by Administrator on 25.01.2018.
- */
-
 public class NewsItem {
 
     private String title;
     private String description;
     private String time;
     private String url;
-//    private Bitmap image;
 
     public NewsItem(String title, String description, String time, String url) {
         this.title = title;
         this.description = description;
         this.time = time;
         this.url = url;
-//        this.image = image;
     }
 
     public String getTitle() {
@@ -35,8 +29,4 @@ public class NewsItem {
     public String getUrl() {
         return url;
     }
-
-//    public Bitmap getImage() {
-//        return image;
-//    }
 }

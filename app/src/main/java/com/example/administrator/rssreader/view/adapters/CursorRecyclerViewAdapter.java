@@ -5,10 +5,6 @@ import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.support.v7.widget.RecyclerView;
 
-/**
- * Created by Administrator on 25.01.2018.
- */
-
 public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
     public static final String LOG_TAG = CursorRecyclerViewAdapter.class.getName();
@@ -23,7 +19,7 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
 
     private DataSetObserver mDataSetObserver;
 
-    public CursorRecyclerViewAdapter(Context context, Cursor cursor) {
+    CursorRecyclerViewAdapter(Context context, Cursor cursor) {
         mContext = context;
         mCursor = cursor;
         mDataValid = cursor != null;
@@ -76,10 +72,6 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
         onBindViewHolder(viewHolder, mCursor);
     }
 
-    /**
-     * Change the underlying cursor to a new cursor. If there is an existing cursor it will be
-     * closed.
-     */
     public void changeCursor(Cursor cursor) {
         Cursor old = swapCursor(cursor);
         if (old != null) {
@@ -87,11 +79,6 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
         }
     }
 
-    /**
-     * Swap in a new Cursor, returning the old Cursor.  Unlike
-     * {@link #changeCursor(Cursor)}, the returned old Cursor is <em>not</em>
-     * closed.
-     */
     public Cursor swapCursor(Cursor newCursor) {
         if (newCursor == mCursor) {
             return null;

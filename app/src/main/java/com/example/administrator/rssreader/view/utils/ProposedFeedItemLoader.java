@@ -1,8 +1,8 @@
 package com.example.administrator.rssreader.view.utils;
 
-import android.os.Handler;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
 import android.util.Log;
 
 import com.example.administrator.rssreader.ProposedFeedItem;
@@ -19,10 +19,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by Administrator on 26.01.2018.
- */
 
 public class ProposedFeedItemLoader {
 

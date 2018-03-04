@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.example.administrator.rssreader.NewsItem;
 import com.example.administrator.rssreader.R;
 import com.example.administrator.rssreader.view.activities.NewsActivity;
+import com.example.administrator.rssreader.view.utils.Utils;
 
 import org.jdom2.Element;
 
@@ -104,10 +105,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         holder.description.setVisibility(View.INVISIBLE);
         holder.imageURL = imageUrl;
         if (imageUrl != null) {
-            Glide
-                    .with(context)
-                    .load(imageUrl)
-                    .into(holder.image);
+            Utils.setImageFromUrl(context, holder.image, imageUrl);
         } else {
             holder.image.setVisibility(View.GONE);
         }
