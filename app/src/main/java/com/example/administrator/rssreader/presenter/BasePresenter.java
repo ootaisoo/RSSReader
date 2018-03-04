@@ -3,12 +3,7 @@ package com.example.administrator.rssreader.presenter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.example.administrator.rssreader.view.MainView;
 import com.example.administrator.rssreader.view.MvpView;
-
-/**
- * Created by Administrator on 28.02.2018.
- */
 
 public abstract class BasePresenter<V extends MvpView> {
 

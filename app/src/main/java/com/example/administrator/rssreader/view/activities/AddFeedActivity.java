@@ -1,9 +1,8 @@
-package com.example.administrator.rssreader.view;
+package com.example.administrator.rssreader.view.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,37 +16,28 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.administrator.rssreader.presenter.AddFeedPresenter;
 import com.example.administrator.rssreader.ProposedFeedItem;
-import com.example.administrator.rssreader.ProposedFeedsUdapter;
 import com.example.administrator.rssreader.R;
-import com.example.administrator.rssreader.Utils;
-import com.example.administrator.rssreader.presenter.DrawerFragmentPresenter;
+import com.example.administrator.rssreader.presenter.AddFeedPresenter;
+import com.example.administrator.rssreader.view.AddFeedView;
+import com.example.administrator.rssreader.view.adapters.ProposedFeedsUdapter;
+import com.example.administrator.rssreader.view.utils.Utils;
 
 import java.net.MalformedURLException;
 import java.util.List;
-
-
-/**
- * Created by Administrator on 25.01.2018.
- */
 
 public class AddFeedActivity extends BaseActivity<AddFeedPresenter> implements AddFeedView {
 
     public static final String LOG_TAG = AddFeedActivity.class.getName();
 
-    private AddFeedPresenter addFeedPresenter;
     private ProposedFeedsUdapter proposedFeedsUdapter;
     private EditText urlText;
-    private String baseUrl;
     private RecyclerView feedsRecyclerView;
     private ProgressBar progressBar;
 
     @Override
     protected void inject() {
-        if (getPresenter() == null) {
-            setPresenter(addFeedPresenter = new AddFeedPresenter(this));
-        }
+            setPresenter(new AddFeedPresenter(this));
     }
 
     @Override
@@ -56,14 +46,12 @@ public class AddFeedActivity extends BaseActivity<AddFeedPresenter> implements A
         setContentView(R.layout.add_feed_activity);
         urlText = findViewById(R.id.edit_search);
 
-        addFeedPresenter = new AddFeedPresenter(this);
-
 //        Performs rss url search via keyboard search button.
         urlText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    addFeedPresenter.performFeedSearch();
+                    getPresenter().performFeedSearch();
                     return true;
                 }
                 return false;
@@ -85,12 +73,14 @@ public class AddFeedActivity extends BaseActivity<AddFeedPresenter> implements A
         searchURLButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addFeedPresenter.performFeedSearch();
+                getPresenter().performFeedSearch();
             }
         });
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     public void onProposedFeedsLoaded(List<ProposedFeedItem> proposedFeedItemList) {
@@ -105,20 +95,22 @@ public class AddFeedActivity extends BaseActivity<AddFeedPresenter> implements A
 
     @Override
     public void performFeedSearch(){
-        InputMethodManager mgr = (InputMethodManager) getSystemService(AddFeedActivity.INPUT_METHOD_SERVICE);
-        mgr.hideSoftInputFromWindow(urlText.getWindowToken(), 0);
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(AddFeedActivity.INPUT_METHOD_SERVICE);
+        if (inputMethodManager != null) {
+            inputMethodManager.hideSoftInputFromWindow(urlText.getWindowToken(), 0);
+        }
         if (proposedFeedsUdapter != null) {
             proposedFeedsUdapter.clear();
         }
 
         progressBar.setVisibility(View.VISIBLE);
 
-        baseUrl = urlText.getText().toString().trim();
+        String baseUrl = urlText.getText().toString().trim();
         try {
-            baseUrl = Utils.makeValidUrl(baseUrl, this);
+            baseUrl = Utils.buildUrl(baseUrl, this);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        addFeedPresenter.loadProposedFeeds(baseUrl);
+        getPresenter().loadProposedFeeds(baseUrl);
     }
 }

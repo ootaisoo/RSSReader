@@ -1,4 +1,4 @@
-package com.example.administrator.rssreader;
+package com.example.administrator.rssreader.view.utils;
 
 import android.content.Context;
 import android.webkit.URLUtil;
@@ -26,7 +26,7 @@ public class Utils {
     }
 
     //is httpsUrl redundant?
-    public static String makeValidUrl(String url, Context context) throws MalformedURLException {
+    public static String buildUrl(String url, Context context) throws MalformedURLException {
         if (!URLUtil.isValidUrl(url)) {
             String httpUrl = "http://" + url;
             if (!URLUtil.isValidUrl(httpUrl)) {

@@ -1,4 +1,4 @@
-package com.example.administrator.rssreader;
+package com.example.administrator.rssreader.view.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,9 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.bumptech.glide.Glide;
-import com.example.administrator.rssreader.view.NewsActivity;
+import com.example.administrator.rssreader.NewsItem;
+import com.example.administrator.rssreader.R;
+import com.example.administrator.rssreader.view.activities.NewsActivity;
 
 import org.jdom2.Element;
 
@@ -21,10 +22,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-/**
- * Created by Administrator on 23.01.2018.
- */
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
 

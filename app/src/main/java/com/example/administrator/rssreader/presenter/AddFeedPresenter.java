@@ -1,26 +1,19 @@
 package com.example.administrator.rssreader.presenter;
 
 import com.example.administrator.rssreader.ProposedFeedItem;
-import com.example.administrator.rssreader.ProposedFeedItemLoader;
 import com.example.administrator.rssreader.view.AddFeedView;
+import com.example.administrator.rssreader.view.utils.ProposedFeedItemLoader;
 
 import java.util.List;
 
-/**
- * Created by Administrator on 25.02.2018.
- */
-
-public class AddFeedPresenter extends BasePresenter {
-
-    AddFeedView addFeedView;
+public class AddFeedPresenter extends BasePresenter<AddFeedView> {
 
     public AddFeedPresenter(AddFeedView addFeedView) {
         super(addFeedView);
-        this.addFeedView = addFeedView;
     }
 
     public void performFeedSearch(){
-        addFeedView.performFeedSearch();
+        getView().performFeedSearch();
     }
 
     public void loadProposedFeeds(String url){
@@ -28,10 +21,10 @@ public class AddFeedPresenter extends BasePresenter {
         proposedFeedItemLoader.loadProposedFeedItems(url, proposedFeedsListener);
     }
 
-    ProposedFeedItemLoader.ProposedFeedsListener proposedFeedsListener = new ProposedFeedItemLoader.ProposedFeedsListener() {
+    private ProposedFeedItemLoader.ProposedFeedsListener proposedFeedsListener = new ProposedFeedItemLoader.ProposedFeedsListener() {
         @Override
         public void onLoaded(List<ProposedFeedItem> items) {
-            addFeedView.onProposedFeedsLoaded(items);
+            getView().onProposedFeedsLoaded(items);
         }
     };
 }

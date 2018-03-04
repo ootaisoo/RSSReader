@@ -1,7 +1,6 @@
-package com.example.administrator.rssreader;
+package com.example.administrator.rssreader.view.utils;
 
 import android.os.Handler;
-import android.util.Log;
 
 
 import org.jdom2.Document;
@@ -32,7 +31,6 @@ public class NewsLoader {
 
     public interface FeedsListener {
         void onLoaded(List<Element> feeds);
-        void onError(Exception e);
     }
 
     static class FeedItemsLoader implements Runnable {
@@ -50,7 +48,6 @@ public class NewsLoader {
         public void run() {
             final FeedsListener feedsListener = listener.get();
 
-            try {
                 feedItems = extractItemsFromRssUrl(url);
 
                 if (feedsListener != null) {
@@ -61,17 +58,6 @@ public class NewsLoader {
                         }
                     });
                 }
-            } catch (final Exception e) {
-
-                if (feedsListener != null) {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            feedsListener.onError(e);
-                        }
-                    });
-                }
-            }
         }
 
         private List<Element> extractItemsFromRssUrl(String rssUrl) {

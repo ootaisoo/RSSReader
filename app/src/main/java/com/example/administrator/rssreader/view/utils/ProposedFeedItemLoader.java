@@ -1,9 +1,11 @@
-package com.example.administrator.rssreader;
+package com.example.administrator.rssreader.view.utils;
 
 import android.os.Handler;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+
+import com.example.administrator.rssreader.ProposedFeedItem;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

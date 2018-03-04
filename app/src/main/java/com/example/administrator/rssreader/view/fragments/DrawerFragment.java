@@ -1,11 +1,10 @@
-package com.example.administrator.rssreader.view;
+package com.example.administrator.rssreader.view.fragments;
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,29 +13,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.example.administrator.rssreader.presenter.DrawerFragmentPresenter;
-import com.example.administrator.rssreader.FeedsAdapter;
 import com.example.administrator.rssreader.R;
-import com.example.administrator.rssreader.presenter.MainFragmentPresenter;
-
-/**
- * Created by Administrator on 24.01.2018.
- */
+import com.example.administrator.rssreader.presenter.DrawerFragmentPresenter;
+import com.example.administrator.rssreader.view.DrawerView;
+import com.example.administrator.rssreader.view.activities.AddFeedActivity;
+import com.example.administrator.rssreader.view.activities.MainActivity;
+import com.example.administrator.rssreader.view.adapters.FeedsAdapter;
 
 public class DrawerFragment extends BaseFragment<DrawerFragmentPresenter> implements DrawerView {
 
     public static final String LOG_TAG = DrawerFragment.class.getName();
 
-    public static final int URL_LOADER = 0;
-
     RecyclerView drawerRecyclerView;
     FeedsAdapter feedsAdapter;
-    DrawerFragmentPresenter drawerFragmentPresenter;
 
     @Override
     protected void inject() {
             setPresenter(new DrawerFragmentPresenter(this));
-
     }
 
     @Override
@@ -70,8 +63,6 @@ public class DrawerFragment extends BaseFragment<DrawerFragmentPresenter> implem
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View drawerFragmentView = inflater.inflate(R.layout.drawer_fragment, container, false);
 
-        drawerFragmentPresenter = new DrawerFragmentPresenter(this);
-
         drawerRecyclerView = drawerFragmentView.findViewById(R.id.drawer_recycler);
         drawerRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -85,10 +76,10 @@ public class DrawerFragment extends BaseFragment<DrawerFragmentPresenter> implem
         addFeedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                drawerFragmentPresenter.callAddFeedActivity();
+                getPresenter().callAddFeedActivity();
             }
         });
-        drawerFragmentPresenter.loadFromDb();
+        getPresenter().loadFromDb();
 
         return drawerFragmentView;
     }

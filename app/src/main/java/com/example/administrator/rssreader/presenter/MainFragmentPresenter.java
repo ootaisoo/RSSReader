@@ -2,25 +2,18 @@ package com.example.administrator.rssreader.presenter;
 
 import android.util.Log;
 
-import com.example.administrator.rssreader.NewsLoader;
 import com.example.administrator.rssreader.view.MainView;
+import com.example.administrator.rssreader.view.utils.NewsLoader;
 
 import org.jdom2.Element;
 
 import java.util.List;
 
-/**
- * Created by Administrator on 25.02.2018.
- */
-
-public class MainFragmentPresenter extends BasePresenter {
+public class MainFragmentPresenter extends BasePresenter<MainView> {
     public static final String LOG_TAG = MainFragmentPresenter.class.getName();
-
-    private MainView view;
 
     public MainFragmentPresenter(MainView view) {
         super(view);
-        this.view = view;
     }
 
     public void loadNews(String url){
@@ -29,15 +22,10 @@ public class MainFragmentPresenter extends BasePresenter {
         newsLoader.loadItems(url, feedsListener);
     }
 
-    NewsLoader.FeedsListener feedsListener = new NewsLoader.FeedsListener() {
+    private NewsLoader.FeedsListener feedsListener = new NewsLoader.FeedsListener() {
         @Override
         public void onLoaded(List<Element> feeds) {
-            view.onFeedsLoaded(feeds);
-        }
-
-        @Override
-        public void onError(Exception e) {
-
+            getView().onFeedsLoaded(feeds);
         }
     };
 }

@@ -1,17 +1,12 @@
-package com.example.administrator.rssreader.view;
+package com.example.administrator.rssreader.view.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
 
 import com.example.administrator.rssreader.presenter.BasePresenter;
 
-/**
- * Created by Administrator on 28.02.2018.
- */
-
-public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
+public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
 
     private P presenter;
 
@@ -23,15 +18,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
         this.presenter = presenter;
     }
 
-    public void onCreate(Bundle savedInstanceState){
+    protected void onCreate(@Nullable Bundle savedInstanceState){
         inject();
         super.onCreate(savedInstanceState);
-        this.presenter.onCreate(savedInstanceState);
-    }
-
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
-        super.onViewCreated(view, savedInstanceState);
-        presenter.onViewCreated();
+        presenter.onCreate(savedInstanceState);
     }
 
     public void onStart(){

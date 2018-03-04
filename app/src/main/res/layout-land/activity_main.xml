@@ -11,7 +11,7 @@
         android:id="@+id/drawer_fragment"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        class="com.example.administrator.rssreader.view.DrawerFragment"
+        class="com.example.administrator.rssreader.view.fragments.DrawerFragment"
         tools:layout="@layout/drawer_fragment">
     </fragment>
 
@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        class="com.example.administrator.rssreader.view.MainFragment"
+        class="com.example.administrator.rssreader.view.fragments.MainFragment"
         tools:layout="@layout/main_fragment">
     </fragment>
 

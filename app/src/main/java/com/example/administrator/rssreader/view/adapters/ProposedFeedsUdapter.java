@@ -1,4 +1,4 @@
-package com.example.administrator.rssreader;
+package com.example.administrator.rssreader.view.adapters;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.administrator.rssreader.ProposedFeedItem;
+import com.example.administrator.rssreader.R;
 import com.example.administrator.rssreader.model.FeedDbHelper;
 import com.example.administrator.rssreader.model.FeedsContract.FeedEntries;
 
@@ -22,10 +24,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import static com.example.administrator.rssreader.model.FeedsContract.FeedEntries.URI;
-
-/**
- * Created by Administrator on 25.01.2018.
- */
 
 public class ProposedFeedsUdapter extends RecyclerView.Adapter<ProposedFeedsUdapter.ProposedFeedsViewHolder> {
 
@@ -64,12 +62,12 @@ public class ProposedFeedsUdapter extends RecyclerView.Adapter<ProposedFeedsUdap
         notifyItemRangeRemoved(0, size);
     }
 
-    public class ProposedFeedsViewHolder extends RecyclerView.ViewHolder {
+    class ProposedFeedsViewHolder extends RecyclerView.ViewHolder {
         private TextView feedResourceName;
         private TextView feedUrl;
         private ImageView feedImage;
 
-        public ProposedFeedsViewHolder(View itemView) {
+        ProposedFeedsViewHolder(View itemView) {
             super(itemView);
             feedResourceName = itemView.findViewById(R.id.feed_resource_name);
             feedUrl = itemView.findViewById(R.id.feed_url);
@@ -78,6 +76,7 @@ public class ProposedFeedsUdapter extends RecyclerView.Adapter<ProposedFeedsUdap
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // adds feed info to database
                     Bitmap feedBitmap = ((BitmapDrawable)feedImage.getDrawable()).getBitmap();
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     feedBitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);

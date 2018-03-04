@@ -1,23 +1,25 @@
-package com.example.administrator.rssreader;
+package com.example.administrator.rssreader.view.adapters;
 
-        import android.app.Activity;
-        import android.content.Context;
-        import android.content.DialogInterface;
-        import android.database.Cursor;
-        import android.database.sqlite.SQLiteDatabase;
-        import android.support.v4.view.GravityCompat;
-        import android.support.v4.widget.DrawerLayout;
-        import android.support.v7.app.AlertDialog;
-        import android.support.v7.widget.RecyclerView;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.ImageView;
-        import android.widget.TextView;
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-        import com.example.administrator.rssreader.model.FeedDbHelper;
+import com.example.administrator.rssreader.FeedItem;
+import com.example.administrator.rssreader.R;
+import com.example.administrator.rssreader.model.FeedDbHelper;
 
-        import static com.example.administrator.rssreader.model.FeedsContract.FeedEntries.*;
+import static com.example.administrator.rssreader.model.FeedsContract.FeedEntries.*;
 
 /**
  * Created by Administrator on 25.01.2018.

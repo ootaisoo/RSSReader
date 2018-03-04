@@ -12,26 +12,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.MainActivity">
+        <activity android:name=".view.activities.MainActivity">
 
         </activity>
-        <activity android:name=".view.AddFeedActivity"
-            android:parentActivityName=".view.MainActivity"
+        <activity android:name=".view.activities.AddFeedActivity"
+            android:parentActivityName=".view.activities.MainActivity"
             android:windowSoftInputMode="stateHidden">
 
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".view.MainActivity" />
+            android:value=".view.activities.MainActivity" />
         </activity>
-        <activity android:name=".view.NewsActivity"
-            android:parentActivityName=".view.MainActivity">
+        <activity android:name=".view.activities.NewsActivity"
+            android:parentActivityName=".view.activities.MainActivity">
 
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".view.MainActivity" />
+            android:value=".view.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".view.SplashActivity"
+            android:name=".view.activities.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
