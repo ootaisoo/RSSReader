@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import com.example.administrator.rssreader.NewsItem;
+import com.example.administrator.rssreader.NewsItemList;
 import com.example.administrator.rssreader.R;
 import com.example.administrator.rssreader.view.activities.NewsActivity;
 import com.example.administrator.rssreader.view.utils.Utils;

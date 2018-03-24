@@ -1,9 +1,11 @@
 package com.example.administrator.rssreader.view.utils;
 
 import android.os.Handler;
+import android.util.Log;
 
 
 import com.example.administrator.rssreader.NewsItem;
+import com.example.administrator.rssreader.NewsItemList;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -17,22 +19,24 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 
-public class NewsLoader {
+public class NewsLoader implements INewsLoader {
 
     public static final String LOG_TAG = NewsLoader.class.getName();
 
     public interface FeedService {
 
-        @GET()
-        Call<List<NewsItem>> fetchNewsItem();
+        @GET(".")
+        Call<NewsItemList> fetchNewsItem();
     }
 
     public interface FeedsListener {
@@ -40,21 +44,29 @@ public class NewsLoader {
     }
 
     public void loadItems(String url, final FeedsListener listener) {
+        Log.e(LOG_TAG, url);
+        if (!url.endsWith("/")){
+            url = url.concat("/");
+        }
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url + "/")
+                .baseUrl(url)
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .build();
+        Log.e(LOG_TAG, "1");
 
         FeedService feedService = retrofit.create(FeedService.class);
-        feedService.fetchNewsItem().enqueue(new Callback<List<NewsItem>>() {
+        Log.e(LOG_TAG, "2");
+        feedService.fetchNewsItem().enqueue(new Callback<NewsItemList>() {
             @Override
-            public void onResponse(Call<List<NewsItem>> call, Response<List<NewsItem>> response) {
-                listener.onLoaded(response.body());
+            public void onResponse(Call<NewsItemList> call, Response<NewsItemList> response) {
+                Log.e(LOG_TAG, "3");
+                listener.onLoaded(response.body().getChannel().getNewsItems());
             }
 
             @Override
-            public void onFailure(Call<List<NewsItem>> call, Throwable t) {
+            public void onFailure(Call<NewsItemList> call, Throwable t) {
+                Log.e(LOG_TAG, "4");
                 // пока не знаю, что здесь написать
             }
         });

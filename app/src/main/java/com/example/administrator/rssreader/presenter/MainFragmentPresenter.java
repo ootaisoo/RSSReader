@@ -4,7 +4,9 @@ import android.util.Log;
 
 
 import com.example.administrator.rssreader.NewsItem;
+import com.example.administrator.rssreader.NewsItemList;
 import com.example.administrator.rssreader.view.MainView;
+import com.example.administrator.rssreader.view.utils.INewsLoader;
 import com.example.administrator.rssreader.view.utils.NewsLoader;
 
 import org.jdom2.Element;
@@ -19,14 +21,16 @@ public class MainFragmentPresenter extends BasePresenter<MainView> {
     }
 
     public void loadNews(String url){
-        Log.e(LOG_TAG, "MainFragmentPresenter");
-        NewsLoader newsLoader = new NewsLoader();
+        INewsLoader newsLoader = new NewsLoader();
         newsLoader.loadItems(url, feedsListener);
     }
 
     private NewsLoader.FeedsListener feedsListener = new NewsLoader.FeedsListener() {
         @Override
         public void onLoaded(List<NewsItem> feeds) {
+            if (feeds.isEmpty()){
+                Log.e(LOG_TAG, "feeds is empty");
+            }
             getView().onFeedsLoaded(feeds);
         }
     };

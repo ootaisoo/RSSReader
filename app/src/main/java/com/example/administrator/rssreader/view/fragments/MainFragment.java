@@ -17,10 +17,12 @@ import android.widget.TextView;
 
 
 import com.example.administrator.rssreader.NewsItem;
+import com.example.administrator.rssreader.NewsItemList;
 import com.example.administrator.rssreader.R;
 import com.example.administrator.rssreader.presenter.MainFragmentPresenter;
 import com.example.administrator.rssreader.view.MainView;
 import com.example.administrator.rssreader.view.adapters.NewsAdapter;
+import com.example.administrator.rssreader.view.utils.NewsLoader;
 
 import org.jdom2.Element;
 

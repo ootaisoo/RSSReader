@@ -1,24 +1,9 @@
 package com.example.administrator.rssreader;
 
 import org.simpleframework.xml.Element;
-import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
-import java.util.List;
-
-//@Root(name="rss")
-//public class NewsItemList {
-//
-//    @ElementList(name = "channel")
-//    private List<NewsItem> newsItems;
-//
-//    public List<NewsItem> getNewsItems() {
-//        return newsItems;
-//    }
-//}
-
-
-@Root(name = "item")
+@Root(name = "item", strict=false)
 public class NewsItem {
 
     @Element(name = "title")
