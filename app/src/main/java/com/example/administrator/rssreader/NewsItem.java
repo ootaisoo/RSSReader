@@ -3,7 +3,7 @@ package com.example.administrator.rssreader;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-@Root(name = "item", strict=false)
+@Root(name = "item")
 public class NewsItem {
 
     @Element(name = "title")

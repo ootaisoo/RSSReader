@@ -6,7 +6,7 @@ import org.simpleframework.xml.Root;
 
 import java.util.List;
 
-@Root(name="rss", strict=false)
+@Root(name="rss")
 public class Channel {
 
     @ElementList(inline = true)
