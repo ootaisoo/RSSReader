@@ -17,6 +17,7 @@ import java.util.List;
 //    }
 //}
 
+
 @Root(name = "item")
 public class NewsItem {
 
