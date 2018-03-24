@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+
+import com.example.administrator.rssreader.NewsItem;
 import com.example.administrator.rssreader.R;
 import com.example.administrator.rssreader.presenter.MainFragmentPresenter;
 import com.example.administrator.rssreader.view.MainView;
@@ -55,7 +57,9 @@ public class MainFragment extends BaseFragment<MainFragmentPresenter> implements
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getPresenter().loadNews(getArguments().getString("rssUrl"));
+                if (getArguments() != null) {
+                    loadNewData();
+                }
                 swipeContainer.setRefreshing(false);
             }
         });
@@ -63,7 +67,7 @@ public class MainFragment extends BaseFragment<MainFragmentPresenter> implements
         progressBar = mainFragmentView.findViewById(R.id.progress_bar);
         emptyTextView = mainFragmentView.findViewById(R.id.empty_view);
 
-        List<Element> feedItems = new ArrayList<>();
+        List<NewsItem> feedItems = new ArrayList<>();
         newsAdapter = new NewsAdapter(feedItems, getActivity());
 
         mainRecyclerView = mainFragmentView.findViewById(R.id.main_recycler);
@@ -71,6 +75,10 @@ public class MainFragment extends BaseFragment<MainFragmentPresenter> implements
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mainRecyclerView.setLayoutManager(layoutManager);
         mainRecyclerView.setAdapter(newsAdapter);
+
+        if (getArguments() != null) {
+            loadNewData();
+        }
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), layoutManager.getOrientation());
         mainRecyclerView.addItemDecoration(dividerItemDecoration);
@@ -88,7 +96,7 @@ public class MainFragment extends BaseFragment<MainFragmentPresenter> implements
     }
 
     @Override
-    public void onFeedsLoaded(List<Element> feedItems){
+    public void onFeedsLoaded(List<NewsItem> feedItems){
         progressBar.setVisibility(View.GONE);
         newsAdapter.addAll(feedItems);
         mainRecyclerView.setAdapter(newsAdapter);

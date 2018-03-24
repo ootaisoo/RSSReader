@@ -2,6 +2,8 @@ package com.example.administrator.rssreader.presenter;
 
 import android.util.Log;
 
+
+import com.example.administrator.rssreader.NewsItem;
 import com.example.administrator.rssreader.view.MainView;
 import com.example.administrator.rssreader.view.utils.NewsLoader;
 
@@ -24,7 +26,7 @@ public class MainFragmentPresenter extends BasePresenter<MainView> {
 
     private NewsLoader.FeedsListener feedsListener = new NewsLoader.FeedsListener() {
         @Override
-        public void onLoaded(List<Element> feeds) {
+        public void onLoaded(List<NewsItem> feeds) {
             getView().onFeedsLoaded(feeds);
         }
     };

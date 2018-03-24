@@ -6,7 +6,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -74,6 +76,7 @@ public class AddFeedActivity extends BaseActivity<AddFeedPresenter> implements A
             @Override
             public void onClick(View view) {
                 getPresenter().performFeedSearch();
+                Log.e(LOG_TAG, "onClick");
             }
         });
 

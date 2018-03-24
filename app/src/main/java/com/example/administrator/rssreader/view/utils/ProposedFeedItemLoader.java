@@ -40,7 +40,7 @@ public class ProposedFeedItemLoader {
         private final WeakReference<ProposedFeedsListener> listener;
         List<ProposedFeedItem> proposedFeedItems;
 
-        public ProposedFeedItemsLoader(String baseUrl, ProposedFeedsListener listener) {
+        ProposedFeedItemsLoader(String baseUrl, ProposedFeedsListener listener) {
             this.baseUrl = baseUrl;
             this.listener = new WeakReference(listener);
         }

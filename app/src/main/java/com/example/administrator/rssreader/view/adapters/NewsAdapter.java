@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+
 import com.example.administrator.rssreader.NewsItem;
 import com.example.administrator.rssreader.R;
 import com.example.administrator.rssreader.view.activities.NewsActivity;
@@ -28,10 +29,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     public static final String LOG_TAG = NewsAdapter.class.getName();
 
-    private List<Element> feedItems;
+    private List<NewsItem> feedItems;
     private Context context;
 
-    public NewsAdapter(List<Element> feedItems, Context context) {
+    public NewsAdapter(List<NewsItem> feedItems, Context context) {
         this.feedItems = feedItems;
         this.context = context;
     }
@@ -46,7 +47,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         notifyDataSetChanged();
     }
 
-    public void addAll(List<Element> list) {
+    public void addAll(List<NewsItem> list) {
         feedItems.addAll(list);
         notifyDataSetChanged();
     }
@@ -57,55 +58,55 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         DateFormat sdfToDate = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss ZZZZZ", Locale.ENGLISH);
         DateFormat sdfToString = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
 
-        Element feedItem = feedItems.get(position);
+        NewsItem newsItem = feedItems.get(position);
 
-        String newsPublishingDate = null;
-        Date pubDate;
-        try {
-            pubDate = sdfToDate.parse(feedItem.getChild("pubDate").getValue());
-            newsPublishingDate = sdfToString.format(pubDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+//        String newsPublishingDate = null;
+//        Date pubDate;
+//        try {
+//            pubDate = sdfToDate.parse(newsItem.getChild("pubDate").getValue());
+//            newsPublishingDate = sdfToString.format(pubDate);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//
 
-        String feedUrl;
-        String imageUrl;
-        String description;
-        String title = feedItem.getChild("title").getValue();
-        feedUrl = feedItem.getChild("link").getValue();
+//        String imageUrl;
+//        String description;
+//        String title = feedItem.getChild("title").getValue();
+        String feedUrl = newsItem.getUrl();
         String[] strings = feedUrl.split("/");
         String siteUrl = strings[2];
-
-        if (feedItem.getChild("enclosure") != null) {
-            imageUrl = feedItem.getChild("enclosure").getAttributeValue("url");
-        } else if (feedItem.getChild("image") != null) {
-            imageUrl = feedItem.getChild("image").getAttributeValue("url");
-        } else if (feedItem.getChild("media:content") != null) {
-            imageUrl = feedItem.getChild("media:content").getAttributeValue("url");
-        } else {
-            imageUrl = null;
-        }
-
-        if (feedItem.getChild("description") != null) {
-            description = feedItem.getChild("description").getValue();
-        } else {
-            description = null;
-        }
-
-        NewsItem newsItem = new NewsItem(title,
-                description,
-                newsPublishingDate,
-                siteUrl);
+//
+//        if (feedItem.getChild("enclosure") != null) {
+//            imageUrl = feedItem.getChild("enclosure").getAttributeValue("url");
+//        } else if (feedItem.getChild("image") != null) {
+//            imageUrl = feedItem.getChild("image").getAttributeValue("url");
+//        } else if (feedItem.getChild("media:content") != null) {
+//            imageUrl = feedItem.getChild("media:content").getAttributeValue("url");
+//        } else {
+//            imageUrl = null;
+//        }
+//
+//        if (feedItem.getChild("description") != null) {
+//            description = feedItem.getChild("description").getValue();
+//        } else {
+//            description = null;
+//        }
+//
+//        NewsItem newsItem = new NewsItem(title,
+//                description,
+//                newsPublishingDate,
+//                siteUrl);
 
         holder.title.setText(newsItem.getTitle());
-        holder.resource.setText(newsItem.getUrl());
+        holder.resource.setText(siteUrl);
         holder.feedUrl = feedUrl;
         holder.publishingDate.setText(String.valueOf(newsItem.getTime()));
         holder.description.setText(newsItem.getDescription());
         holder.description.setVisibility(View.INVISIBLE);
-        holder.imageURL = imageUrl;
-        if (imageUrl != null) {
-            Utils.setImageFromUrl(context, holder.image, imageUrl);
+        holder.imageURL = newsItem.getImageUrl();
+        if (newsItem.getImageUrl() != null) {
+            Utils.setImageFromUrl(context, holder.image, newsItem.getImageUrl());
         } else {
             holder.image.setVisibility(View.GONE);
         }
