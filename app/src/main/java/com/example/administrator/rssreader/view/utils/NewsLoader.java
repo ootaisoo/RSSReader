@@ -48,9 +48,13 @@ public class NewsLoader implements INewsLoader {
         if (!url.endsWith("/")){
             url = url.concat("/");
         }
+//
+//        OkHttpClient client = new OkHttpClient.Builder()
+//                .build();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
+//                .client(client)
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .build();
         Log.e(LOG_TAG, "1");

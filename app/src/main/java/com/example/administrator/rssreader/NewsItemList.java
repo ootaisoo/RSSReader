@@ -7,7 +7,7 @@ import org.simpleframework.xml.Root;
 
 import java.util.List;
 
-@Root(name="rss")
+@Root(name="rss", strict = false)
 public class NewsItemList {
 
     @Element(name = "channel")
