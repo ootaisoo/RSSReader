@@ -24,7 +24,12 @@ public class ProposedFeedItemLoader {
 
     public static final String LOG_TAG = ProposedFeedItemLoader.class.getName();
 
+    public ProposedFeedItemLoader() {
+        Log.e(LOG_TAG, "ProposedFeedItemLoader");
+    }
+
     public void loadProposedFeedItems(String url, ProposedFeedsListener listener){
+        Log.e(LOG_TAG, "loadProposedFeedItems()");
         ProposedFeedItemsLoader proposedFeedItemsLoader = new ProposedFeedItemsLoader(url, listener);
         Thread thread = new Thread(proposedFeedItemsLoader);
         thread.start();
@@ -77,7 +82,7 @@ public class ProposedFeedItemLoader {
                                 title = doc.title();
                             } else {
                                 Elements titleLinks = doc.select("title");
-                                    title = titleLinks.get(0).ownText();
+                                title = titleLinks.get(0).ownText();
                             }
                         }
                         proposedFeedItemList.add(new ProposedFeedItem(title,
@@ -110,5 +115,3 @@ public class ProposedFeedItemLoader {
         }
     }
 }
-
-
