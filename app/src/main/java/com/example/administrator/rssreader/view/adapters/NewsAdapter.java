@@ -55,49 +55,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     @Override
     public void onBindViewHolder(NewsViewHolder holder, int position) {
-
-        DateFormat sdfToDate = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss ZZZZZ", Locale.ENGLISH);
-        DateFormat sdfToString = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
-
         NewsItem newsItem = feedItems.get(position);
 
-//        String newsPublishingDate = null;
-//        Date pubDate;
-//        try {
-//            pubDate = sdfToDate.parse(newsItem.getChild("pubDate").getValue());
-//            newsPublishingDate = sdfToString.format(pubDate);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
-
-//        String imageUrl;
-//        String description;
-//        String title = feedItem.getChild("title").getValue();
         String feedUrl = newsItem.getUrl();
         String[] strings = feedUrl.split("/");
         String siteUrl = strings[2];
-//
-//        if (feedItem.getChild("enclosure") != null) {
-//            imageUrl = feedItem.getChild("enclosure").getAttributeValue("url");
-//        } else if (feedItem.getChild("image") != null) {
-//            imageUrl = feedItem.getChild("image").getAttributeValue("url");
-//        } else if (feedItem.getChild("media:content") != null) {
-//            imageUrl = feedItem.getChild("media:content").getAttributeValue("url");
-//        } else {
-//            imageUrl = null;
-//        }
-//
-//        if (feedItem.getChild("description") != null) {
-//            description = feedItem.getChild("description").getValue();
-//        } else {
-//            description = null;
-//        }
-//
-//        NewsItem newsItem = new NewsItem(title,
-//                description,
-//                newsPublishingDate,
-//                siteUrl);
 
         holder.title.setText(newsItem.getTitle());
         holder.resource.setText(siteUrl);

@@ -61,17 +61,22 @@ public class NewsLoader implements INewsLoader {
 
         FeedService feedService = retrofit.create(FeedService.class);
         Log.e(LOG_TAG, "2");
-        feedService.fetchNewsItem().enqueue(new Callback<NewsItemList>() {
+        Call<NewsItemList> call = feedService.fetchNewsItem();
+        call.enqueue(new Callback<NewsItemList>() {
             @Override
             public void onResponse(Call<NewsItemList> call, Response<NewsItemList> response) {
                 Log.e(LOG_TAG, "3");
-                listener.onLoaded(response.body().getChannel().getNewsItems());
+                    if (response.isSuccessful()) {
+                        listener.onLoaded(response.body().getChannel().getNewsItems());
+                    } else {
+                        Log.e(LOG_TAG, String.valueOf(response.code()));
+
+                    }
             }
 
             @Override
             public void onFailure(Call<NewsItemList> call, Throwable t) {
-                Log.e(LOG_TAG, "4");
-                // пока не знаю, что здесь написать
+                Log.e(LOG_TAG, t.toString());
             }
         });
     }
