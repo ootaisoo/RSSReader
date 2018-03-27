@@ -49,40 +49,27 @@ public class NewsLoader implements INewsLoader {
 
     public void loadItems(String url, final FeedsListener listener){
 
-        Call<NewsItemList> call = null;
-        try {
-            URL url1 = new URL(url);
-            String baseUrl = url1.getProtocol() + "://" + url1.getHost() + "/";
-            String path = url1.getPath();
+    Call<NewsItemList> call = null;
 
-//        String[] strings = url.split("/");
-//        StringBuilder sb = new StringBuilder();
-//        sb.append(strings[0])
-//                .append("/")
-//                .append(strings[1])
-//                .append("/")
-//                .append(strings[2])
-//                .append("/");
+    URL feedUrl = parseUrl(url);
 
-//        String baseUrl = strings[0] + "/" + strings[1] + "/" + strings[2] + "/";
-//        Log.e(LOG_TAG, baseUrl);
+    String baseUrl = feedUrl.getProtocol() + "://" + feedUrl.getHost() + "/";
+    String path = feedUrl.getPath();
 //
 //        OkHttpClient client = new OkHttpClient.Builder()
 //                .build();
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(baseUrl)
-    //                .client(client)
-                    .addConverterFactory(SimpleXmlConverterFactory.create())
-                    .build();
-            Log.e(LOG_TAG, "1");
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+//                .client(client)
+                .addConverterFactory(SimpleXmlConverterFactory.create())
+                .build();
+        Log.e(LOG_TAG, "1");
 
-            FeedService feedService = retrofit.create(FeedService.class);
-            Log.e(LOG_TAG, "2");
-            call = feedService.fetchNewsItem(path);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        FeedService feedService = retrofit.create(FeedService.class);
+        Log.e(LOG_TAG, "2");
+        call = feedService.fetchNewsItem(path);
+
         call.enqueue(new Callback<NewsItemList>() {
             @Override
             public void onResponse(Call<NewsItemList> call, Response<NewsItemList> response) {
@@ -100,6 +87,16 @@ public class NewsLoader implements INewsLoader {
                 Log.e(LOG_TAG, t.toString());
             }
         });
+    }
+
+    private URL parseUrl(String s){
+        URL url = null;
+        try {
+            url = new URL(s);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return  url;
     }
 }
 
