@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide;
 import com.example.administrator.rssreader.R;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 
 public class Utils {
 
@@ -21,7 +22,7 @@ public class Utils {
         }
     }
 
-    //is httpsUrl redundant?
+        //is httpsUrl redundant?
     public static String buildUrl(String url, Context context) throws MalformedURLException {
         if (!URLUtil.isValidUrl(url)) {
             String httpUrl = "http://" + url;
@@ -39,5 +40,15 @@ public class Utils {
         } else {
             return url;
         }
+    }
+
+    public static URL parseUrl(String s){
+        URL url = null;
+        try {
+            url = new URL(s);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return  url;
     }
 }

@@ -2,14 +2,10 @@ package com.example.administrator.rssreader.presenter;
 
 import android.util.Log;
 
-
 import com.example.administrator.rssreader.NewsItem;
-import com.example.administrator.rssreader.NewsItemList;
 import com.example.administrator.rssreader.view.MainView;
 import com.example.administrator.rssreader.view.utils.INewsLoader;
 import com.example.administrator.rssreader.view.utils.NewsLoader;
-
-import org.jdom2.Element;
 
 import java.util.List;
 

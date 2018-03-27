@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.administrator.rssreader.ProposedFeedItem;
 import com.example.administrator.rssreader.view.AddFeedView;
+import com.example.administrator.rssreader.view.utils.IProposedFeedItemLoader;
 import com.example.administrator.rssreader.view.utils.ProposedFeedItemLoader;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class AddFeedPresenter extends BasePresenter<AddFeedView> {
     }
 
     public void loadProposedFeeds(String url){
-        ProposedFeedItemLoader proposedFeedItemLoader = new ProposedFeedItemLoader();
+        IProposedFeedItemLoader proposedFeedItemLoader = new ProposedFeedItemLoader();
         proposedFeedItemLoader.loadProposedFeedItems(url, proposedFeedsListener);
         Log.e(LOG_TAG, "loadProposedFeeds()");
     }

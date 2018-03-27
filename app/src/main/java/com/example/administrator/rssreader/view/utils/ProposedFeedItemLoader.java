@@ -1,8 +1,5 @@
 package com.example.administrator.rssreader.view.utils;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Handler;
 import android.util.Log;
 
 import com.example.administrator.rssreader.ProposedFeedItem;
@@ -13,14 +10,17 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.lang.ref.WeakReference;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProposedFeedItemLoader {
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.http.GET;
+
+public class ProposedFeedItemLoader implements IProposedFeedItemLoader {
 
     public static final String LOG_TAG = ProposedFeedItemLoader.class.getName();
 
@@ -28,90 +28,71 @@ public class ProposedFeedItemLoader {
         Log.e(LOG_TAG, "ProposedFeedItemLoader");
     }
 
-    public void loadProposedFeedItems(String url, ProposedFeedsListener listener){
-        Log.e(LOG_TAG, "loadProposedFeedItems()");
-        ProposedFeedItemsLoader proposedFeedItemsLoader = new ProposedFeedItemsLoader(url, listener);
-        Thread thread = new Thread(proposedFeedItemsLoader);
-        thread.start();
-    }
-
     public interface ProposedFeedsListener {
         void onLoaded(List<ProposedFeedItem> items);
     }
 
-    static class ProposedFeedItemsLoader implements Runnable {
-        Handler handler = new Handler();
-        private String baseUrl;
-        private final WeakReference<ProposedFeedsListener> listener;
-        List<ProposedFeedItem> proposedFeedItems;
+    public interface ProposedFeedService {
 
-        ProposedFeedItemsLoader(String baseUrl, ProposedFeedsListener listener) {
-            this.baseUrl = baseUrl;
-            this.listener = new WeakReference(listener);
-        }
+        @GET("/")
+        Call<ResponseBody> fetchProposedFeedItem();
+    }
 
-        @Override
-        public void run() {
-            final ProposedFeedsListener proposedFeedsListener = listener.get();
+    public void loadProposedFeedItems(String url, final ProposedFeedsListener listener){
 
-            proposedFeedItems = fetchFeedItemsData(baseUrl);
-            if (proposedFeedsListener != null){
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        proposedFeedsListener.onLoaded(proposedFeedItems);
-                    }
-                });
-            }
-        }
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .build();
 
-        private List<ProposedFeedItem> fetchFeedItemsData(String urlText) {
-            List<ProposedFeedItem> proposedFeedItemList = new ArrayList<>();
-
-            //extract attributes via jsoup and put them in proposedFeedItemList
-            try {
-                Document doc = Jsoup.connect(urlText).get();
-                Elements links = doc.select("a[href]");
-                links.addAll(doc.select("link[href]"));
-
-                for (Element link : links) {
-                    if (link.attr("href").contains("rss")) {
-                        String title = link.attr("title");
-                        if (title.equals("") || title.equals("RSS")){
-                            if (doc.title() != null) {
-                                title = doc.title();
-                            } else {
-                                Elements titleLinks = doc.select("title");
-                                title = titleLinks.get(0).ownText();
-                            }
-                        }
-                        proposedFeedItemList.add(new ProposedFeedItem(title,
-                                link.attr("abs:href"),
-                                extractFeedImage(doc.select("link[rel*=icon]").attr("abs:href"))));
-                    }
+        ProposedFeedService proposedFeedService = retrofit.create(ProposedFeedService.class);
+        Call<ResponseBody> call = proposedFeedService.fetchProposedFeedItem();
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    listener.onLoaded(parseHtml(response.body().string()));
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (IllegalArgumentException | IOException e) {
-                e.printStackTrace();
-            }
-            if (proposedFeedItemList.isEmpty()) {
-                Log.e(LOG_TAG, "proposedFeedItemList == null");
             }
 
-            return proposedFeedItemList;
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e(LOG_TAG, t.toString());
+            }
+        });
+    }
+
+    private List<ProposedFeedItem> parseHtml(String html) {
+        List<ProposedFeedItem> proposedFeedItemList = new ArrayList<>();
+
+        //extract attributes via jsoup and put them in proposedFeedItemList
+        try {
+            Document doc = Jsoup.parse(html);
+            Elements links = doc.select("a[href]");
+            links.addAll(doc.select("link[href]"));
+
+            for (Element link : links) {
+                if (link.attr("href").contains("rss")) {
+                    String title = link.attr("title");
+                    if (title.equals("") || title.equals("RSS")){
+                        if (doc.title() != null) {
+                            title = doc.title();
+                        } else {
+                            Elements titleLinks = doc.select("title");
+                            title = titleLinks.get(0).ownText();
+                        }
+                    }
+                    proposedFeedItemList.add(new ProposedFeedItem(title,
+                            link.attr("abs:href"),
+                            doc.select("link[rel*=icon]").attr("abs:href")));
+                    Log.e(LOG_TAG, doc.select("link[rel*=icon]").attr("abs:href"));
+                }
+            }
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
         }
 
-        private Bitmap extractFeedImage(String url) {
-            try {
-                URL urlConnection = new URL(url);
-                HttpURLConnection connection = (HttpURLConnection) urlConnection.openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                return BitmapFactory.decodeStream(input);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
+        return proposedFeedItemList;
     }
 }

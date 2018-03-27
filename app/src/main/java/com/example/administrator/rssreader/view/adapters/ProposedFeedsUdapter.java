@@ -19,6 +19,7 @@ import com.example.administrator.rssreader.ProposedFeedItem;
 import com.example.administrator.rssreader.R;
 import com.example.administrator.rssreader.model.FeedDbHelper;
 import com.example.administrator.rssreader.model.FeedsContract.FeedEntries;
+import com.example.administrator.rssreader.view.utils.Utils;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -48,7 +49,7 @@ public class ProposedFeedsUdapter extends RecyclerView.Adapter<ProposedFeedsUdap
         ProposedFeedItem proposedFeedItem = proposedFeedsList.get(position);
         holder.feedResourceName.setText(proposedFeedItem.getFeedName());
         holder.feedUrl.setText(proposedFeedItem.getFeedUrl());
-        holder.feedImage.setImageBitmap(proposedFeedItem.getFeedImage());
+        Utils.setImageFromUrl(context, holder.feedImage, proposedFeedItem.getFeedImage());
     }
 
     @Override

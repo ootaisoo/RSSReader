@@ -1,14 +1,12 @@
 package com.example.administrator.rssreader;
 
-import android.graphics.Bitmap;
-
 public class ProposedFeedItem {
 
     private String feedName;
     private String feedUrl;
-    private Bitmap feedImage;
+    private String feedImage;
 
-    public ProposedFeedItem(String feedName, String feedUrl, Bitmap feedImage) {
+    public ProposedFeedItem(String feedName, String feedUrl, String feedImage) {
         this.feedName = feedName;
         this.feedUrl = feedUrl;
         this.feedImage = feedImage;
@@ -22,7 +20,7 @@ public class ProposedFeedItem {
         return feedUrl;
     }
 
-    public Bitmap getFeedImage() {
+    public String getFeedImage() {
         return feedImage;
     }
 }
