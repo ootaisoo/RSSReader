@@ -65,7 +65,7 @@ public class ProposedFeedItemLoader implements IProposedFeedItemLoader {
         List<ProposedFeedItem> proposedFeedItemList = new ArrayList<>();
 
         //extract attributes via jsoup and put them in proposedFeedItemList
-        
+
         try {
             Document doc = Jsoup.parse(html);
             Elements links = doc.select("a[href]");
