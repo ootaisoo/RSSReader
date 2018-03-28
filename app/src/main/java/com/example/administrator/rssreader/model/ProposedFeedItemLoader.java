@@ -48,7 +48,6 @@ public class ProposedFeedItemLoader implements IProposedFeedItemLoader {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     listener.onLoaded(parseHtml(url, response.body().string()));
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
