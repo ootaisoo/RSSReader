@@ -97,7 +97,6 @@ public class ProposedFeedsUdapter extends RecyclerView.Adapter<ProposedFeedsUdap
                     }
                     context.getContentResolver().notifyChange(URI, null);
                     Toast.makeText(context, R.string.feed_added, Toast.LENGTH_SHORT).show();
-                    Log.e(LOG_TAG, "the numbers of rows in the cursor is " + String.valueOf(feedsDataBase.query(FeedEntries.TABLE_NAME, null, null, null, null, null, null).getCount()));
                 }
             });
         }

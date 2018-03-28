@@ -44,8 +44,6 @@ public class MainActivity extends AppCompatActivity implements FeedsAdapter.OnFe
         }
 
         if (getResources().getConfiguration().orientation != ORIENTATION_LANDSCAPE) {
-            Log.e(LOG_TAG, "A");
-
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
                 actionBar.setDisplayHomeAsUpEnabled(true);

@@ -1,8 +1,9 @@
-package com.example.administrator.rssreader.view.utils;
+package com.example.administrator.rssreader.model;
 
 import android.util.Log;
 
 import com.example.administrator.rssreader.ProposedFeedItem;
+import com.example.administrator.rssreader.view.utils.Utils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -24,10 +25,6 @@ public class ProposedFeedItemLoader implements IProposedFeedItemLoader {
 
     public static final String LOG_TAG = ProposedFeedItemLoader.class.getName();
 
-    public ProposedFeedItemLoader() {
-        Log.e(LOG_TAG, "ProposedFeedItemLoader");
-    }
-
     public interface ProposedFeedsListener {
         void onLoaded(List<ProposedFeedItem> items);
     }
@@ -38,7 +35,7 @@ public class ProposedFeedItemLoader implements IProposedFeedItemLoader {
         Call<ResponseBody> fetchProposedFeedItem();
     }
 
-    public void loadProposedFeedItems(String url, final ProposedFeedsListener listener){
+    public void loadProposedFeedItems(final String url, final ProposedFeedsListener listener){
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
@@ -50,7 +47,8 @@ public class ProposedFeedItemLoader implements IProposedFeedItemLoader {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    listener.onLoaded(parseHtml(response.body().string()));
+                    listener.onLoaded(parseHtml(url, response.body().string()));
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -63,7 +61,7 @@ public class ProposedFeedItemLoader implements IProposedFeedItemLoader {
         });
     }
 
-    private List<ProposedFeedItem> parseHtml(String html) {
+    private List<ProposedFeedItem> parseHtml(String url, String html) {
         List<ProposedFeedItem> proposedFeedItemList = new ArrayList<>();
 
         //extract attributes via jsoup and put them in proposedFeedItemList
@@ -75,6 +73,14 @@ public class ProposedFeedItemLoader implements IProposedFeedItemLoader {
             for (Element link : links) {
                 if (link.attr("href").contains("rss")) {
                     String title = link.attr("title");
+                    String feedUrl = link.attr("href");
+                    if (feedUrl.startsWith("/")){
+                        feedUrl = url + feedUrl;
+                    }
+                    String imageUrl =  doc.select("link[rel*=icon]").attr("href");
+                    if (imageUrl.startsWith("/")){
+                        imageUrl = url + imageUrl;
+                    }
                     if (title.equals("") || title.equals("RSS")){
                         if (doc.title() != null) {
                             title = doc.title();
@@ -84,9 +90,8 @@ public class ProposedFeedItemLoader implements IProposedFeedItemLoader {
                         }
                     }
                     proposedFeedItemList.add(new ProposedFeedItem(title,
-                            link.attr("abs:href"),
-                            doc.select("link[rel*=icon]").attr("abs:href")));
-                    Log.e(LOG_TAG, doc.select("link[rel*=icon]").attr("abs:href"));
+                            feedUrl,
+                            imageUrl));
                 }
             }
         } catch (IllegalArgumentException e) {

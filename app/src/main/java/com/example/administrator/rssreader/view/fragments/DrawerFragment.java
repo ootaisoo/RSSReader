@@ -76,18 +76,13 @@ public class DrawerFragment extends BaseFragment<DrawerFragmentPresenter> implem
         addFeedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getPresenter().callAddFeedActivity();
+                Intent addFeedIntent = new Intent(getActivity(), AddFeedActivity.class);
+                startActivity(addFeedIntent);
             }
         });
         getPresenter().loadFromDb();
 
         return drawerFragmentView;
-    }
-
-    @Override
-    public void callAddFeedActivity() {
-        Intent addFeedIntent = new Intent(getActivity(), AddFeedActivity.class);
-        startActivity(addFeedIntent);
     }
 
     @Override

@@ -1,6 +1,4 @@
-package com.example.administrator.rssreader.view.utils;
-
-import java.net.MalformedURLException;
+package com.example.administrator.rssreader.model;
 
 public interface INewsLoader {
 

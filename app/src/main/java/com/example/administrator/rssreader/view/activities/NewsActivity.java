@@ -59,22 +59,17 @@ public class NewsActivity extends BaseActivity<NewsPresenter> implements NewsVie
         goToSiteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getPresenter().goToSite(resource);
+                Uri uri = Uri.parse(resource);
+                Intent urlIntent = new Intent(Intent.ACTION_VIEW, uri);
+                if (urlIntent.resolveActivity(getPackageManager()) != null){
+                    startActivity(urlIntent);
+                }
             }
         });
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
-    @Override
-    public void goToSite(String url) {
-        Uri uri = Uri.parse(url);
-        Intent urlIntent = new Intent(Intent.ACTION_VIEW, uri);
-        if (urlIntent.resolveActivity(getPackageManager()) != null){
-            startActivity(urlIntent);
         }
     }
 

@@ -2,8 +2,9 @@ package com.example.administrator.rssreader.presenter;
 
 import android.database.Cursor;
 
+import com.example.administrator.rssreader.model.FeedsFromDbLoader;
+import com.example.administrator.rssreader.model.IFeedsFromDbLoader;
 import com.example.administrator.rssreader.view.DrawerView;
-import com.example.administrator.rssreader.view.utils.FeedsFromDbLoader;
 
 public class DrawerFragmentPresenter extends BasePresenter<DrawerView> {
 
@@ -11,12 +12,8 @@ public class DrawerFragmentPresenter extends BasePresenter<DrawerView> {
         super(drawerView);
     }
 
-    public void callAddFeedActivity(){
-        getView().callAddFeedActivity();
-    }
-
     public void loadFromDb(){
-        FeedsFromDbLoader feedsFromDbLoader = new FeedsFromDbLoader();
+        IFeedsFromDbLoader feedsFromDbLoader = new FeedsFromDbLoader();
         feedsFromDbLoader.loadFeedsFromDb(getView().getViewContext(), feedsListener);
     }
 

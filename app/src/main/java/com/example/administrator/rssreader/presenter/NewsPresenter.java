@@ -7,8 +7,4 @@ public class NewsPresenter extends BasePresenter<NewsView> {
     public NewsPresenter(NewsView newsView) {
         super(newsView);
     }
-
-    public void goToSite(String url){
-        getView().goToSite(url);
-    }
 }

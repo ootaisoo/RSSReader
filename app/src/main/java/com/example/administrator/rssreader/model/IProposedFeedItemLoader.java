@@ -1,4 +1,4 @@
-package com.example.administrator.rssreader.view.utils;
+package com.example.administrator.rssreader.model;
 
 public interface IProposedFeedItemLoader {
 

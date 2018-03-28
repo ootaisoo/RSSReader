@@ -18,6 +18,7 @@ public class Utils {
             Glide
                     .with(context)
                     .load(url)
+                    .asBitmap()
                     .into(imageView);
         }
     }

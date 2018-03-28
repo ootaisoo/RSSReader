@@ -1,4 +1,4 @@
-package com.example.administrator.rssreader.view.utils;
+package com.example.administrator.rssreader.model;
 
 import android.content.Context;
 import android.database.ContentObserver;
@@ -6,12 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 
-import com.example.administrator.rssreader.model.FeedDbHelper;
-import com.example.administrator.rssreader.model.FeedsContract;
-
 import java.lang.ref.WeakReference;
 
-public class FeedsFromDbLoader {
+public class FeedsFromDbLoader implements IFeedsFromDbLoader {
 
     public static final String LOG_TAG = FeedsFromDbLoader.class.getName();
 

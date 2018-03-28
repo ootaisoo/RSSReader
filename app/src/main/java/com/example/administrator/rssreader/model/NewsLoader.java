@@ -1,9 +1,10 @@
-package com.example.administrator.rssreader.view.utils;
+package com.example.administrator.rssreader.model;
 
 import android.util.Log;
 
 import com.example.administrator.rssreader.NewsItem;
 import com.example.administrator.rssreader.NewsItemList;
+import com.example.administrator.rssreader.view.utils.Utils;
 
 import java.net.URL;
 import java.util.List;
@@ -36,13 +37,9 @@ public class NewsLoader implements INewsLoader {
 
     String baseUrl = feedUrl.getProtocol() + "://" + feedUrl.getHost() + "/";
     String path = feedUrl.getPath();
-//
-//        OkHttpClient client = new OkHttpClient.Builder()
-//                .build();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
-//                .client(client)
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .build();
 
@@ -56,7 +53,6 @@ public class NewsLoader implements INewsLoader {
                         listener.onLoaded(response.body().getChannel().getNewsItems());
                     } else {
                         Log.e(LOG_TAG, String.valueOf(response.code()));
-
                     }
             }
 

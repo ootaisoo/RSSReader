@@ -53,7 +53,7 @@ public class AddFeedActivity extends BaseActivity<AddFeedPresenter> implements A
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    getPresenter().performFeedSearch();
+                    performFeedSearch();
                     return true;
                 }
                 return false;
@@ -75,8 +75,7 @@ public class AddFeedActivity extends BaseActivity<AddFeedPresenter> implements A
         searchURLButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getPresenter().performFeedSearch();
-                Log.e(LOG_TAG, "onClick");
+                performFeedSearch();
             }
         });
 
