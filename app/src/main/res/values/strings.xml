@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">RSS Reader</string>
     <string name="feeds">Feeds</string>
-    <string name="enter_url">Enter URL</string>
+    <string name="enter_url">Enter Site URL</string>
     <string name="invalid_url">Invalid URL</string>
     <string name="no_internet_connection">No Internet Connection.</string>
     <string name="choose_feed">Select Feed</string>
